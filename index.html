@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>Morgan Stanley x Microsoft 365 Copilot &#8212; Enablement Sessions</title>
+<style>
+  :root {
+    --ms-blue: #002A5C;
+    --ms-navy: #00172F;
+    --ms-mid: #113E77;
+    --ms-accent: #2C6EA8;
+    --ms-light: #4FA3D9;
+    --ms-gray: #C6C6C6;
+    --bg: #eef1f6;
+    --surface: #ffffff;
+    --surface-alt: #f6f8fb;
+    --text: #16202e;
+    --muted-text: #586272;
+    --border: #dde3ec;
+    --brand-text: #002A5C;
+    --shadow: 0 2px 10px rgba(0, 23, 47, 0.08);
+    --radius: 12px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0c1422;
+      --surface: #15202f;
+      --surface-alt: #1b2838;
+      --text: #eef2f8;
+      --muted-text: #a8b3c2;
+      --border: #25344a;
+      --brand-text: #7cc0f5;
+      --shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+  }
+
+  /* ---------- Header ---------- */
+  header {
+    background: linear-gradient(135deg, var(--ms-navy) 0%, var(--ms-blue) 55%, var(--ms-mid) 100%);
+    color: #fff;
+    padding: 28px 24px 22px;
+  }
+  .header-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  /* Microsoft logo (four-color squares) */
+  .ms-logo { display: inline-flex; align-items: center; flex-shrink: 0; }
+  .ms-squares {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 3px;
+    width: 46px;
+    height: 46px;
+  }
+  .ms-squares span { display: block; border-radius: 1px; }
+  .ms-squares .s1 { background: #F25022; }
+  .ms-squares .s2 { background: #7FBA00; }
+  .ms-squares .s3 { background: #00A4EF; }
+  .ms-squares .s4 { background: #FFB900; }
+  /* Morgan Stanley wordmark logo */
+  .msw-logo { display: inline-flex; align-items: center; flex-shrink: 0; height: 34px; }
+  .msw-logo svg { height: 100%; width: auto; display: block; }
+  .header-divider { width: 1px; height: 34px; background: rgba(255,255,255,0.35); flex-shrink: 0; }
+  .header-text h1 { margin: 0 0 4px; font-size: 25px; font-weight: 600; }
+  .header-text p { margin: 0; font-size: 15px; color: #cfe0f4; }
+  .header-meta { margin-left: auto; text-align: right; font-size: 13px; color: #cfe0f4; }
+  .header-meta strong { color: #fff; }
+
+  /* ---------- Tabs ---------- */
+  .tabbar {
+    background: var(--surface);
+    border-bottom: 3px solid var(--ms-blue);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    box-shadow: var(--shadow);
+  }
+  .tabbar-inner { max-width: 1080px; margin: 0 auto; display: flex; flex-wrap: wrap; }
+  .tab-btn {
+    appearance: none;
+    border: none;
+    background: transparent;
+    color: var(--muted-text);
+    font-size: 15px;
+    font-weight: 600;
+    font-family: inherit;
+    padding: 15px 22px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -3px;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+  }
+  .tab-btn:hover { color: var(--ms-blue); background: var(--surface-alt); }
+  .tab-btn.active { color: var(--ms-blue); border-bottom-color: var(--ms-light); }
+
+  /* ---------- Layout ---------- */
+  main { max-width: 1080px; margin: 0 auto; padding: 30px 24px 70px; }
+  .panel { display: none; animation: fade 0.25s ease; }
+  .panel.active { display: block; }
+  @keyframes fade { from { opacity: 0; transform: translateY(6px);} to {opacity:1; transform:none;} }
+
+  h2.section-title { font-size: 23px; color: var(--brand-text); margin: 4px 0 6px; }
+  .lede { color: var(--muted-text); font-size: 16px; margin: 0 0 24px; max-width: 780px; }
+
+  h3.group {
+    font-size: 17px;
+    margin: 30px 0 4px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .step-num {
+    background: var(--ms-blue);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .scene { color: var(--muted-text); font-size: 14px; margin: 2px 0 14px 36px; font-style: italic; }
+
+  /* ---------- Prompt card ---------- */
+  .prompt-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--ms-light);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    margin: 0 0 16px;
+    box-shadow: var(--shadow);
+  }
+  .prompt-card.exec { border-left-color: #c9821a; }
+  .prompt-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .prompt-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--brand-text);
+  }
+  .prompt-label .exec-tag {
+    color: #b06f10;
+    background: #fbe7c9;
+    padding: 1px 8px;
+    border-radius: 20px;
+    margin-left: 6px;
+  }
+  .prompt-text {
+    margin: 0;
+    font-family: inherit;
+    font-size: 15px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: var(--text);
+    background: var(--surface-alt);
+    padding: 14px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  .copy-btn {
+    appearance: none;
+    border: 1px solid var(--ms-blue);
+    background: var(--ms-blue);
+    color: #fff;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 7px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s, transform 0.05s;
+  }
+  .copy-btn:hover { background: var(--ms-mid); }
+  .copy-btn:active { transform: scale(0.97); }
+  .copy-btn.copied { background: #1c7c3c; border-color: #1c7c3c; }
+
+  .tip {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--ms-accent);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    margin: 18px 0;
+    font-size: 14.5px;
+  }
+  .tip strong { color: var(--brand-text); }
+  .tip em { color: var(--ms-accent); font-style: normal; font-weight: 600; }
+  .tip code {
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--ms-light);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 13.5px;
+    font-weight: 600;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px;
+    margin: 18px 0;
+  }
+  .info-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--ms-light);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    box-shadow: var(--shadow);
+  }
+  .info-card h4 { margin: 0 0 6px; color: var(--brand-text); font-size: 15px; }
+  .info-card p { margin: 0; font-size: 14px; color: var(--muted-text); }
+
+  ol.steps { padding-left: 0; counter-reset: s; list-style: none; margin: 16px 0; }
+  ol.steps li {
+    position: relative;
+    padding: 4px 0 16px 44px;
+    border-left: 2px solid var(--border);
+    margin-left: 13px;
+  }
+  ol.steps li:last-child { border-left-color: transparent; }
+  ol.steps li::before {
+    counter-increment: s;
+    content: counter(s);
+    position: absolute;
+    left: -14px; top: 0;
+    width: 28px; height: 28px;
+    background: var(--ms-blue);
+    color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+  }
+  ol.steps li strong { color: var(--text); }
+
+  a.doc-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--ms-blue);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin: 6px 0;
+    transition: background 0.15s;
+  }
+  a.doc-link:hover { background: var(--ms-mid); }
+
+  .agenda-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14.5px; }
+  .agenda-table th, .agenda-table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); }
+  .agenda-table th { background: var(--ms-blue); color: #fff; font-weight: 600; }
+  .agenda-table tr:nth-child(even) td { background: var(--surface-alt); }
+
+  /* ---------- Chooser matrix ---------- */
+  .matrix-wrap { overflow-x: auto; margin: 16px 0 6px; -webkit-overflow-scrolling: touch; }
+  .matrix { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 980px; }
+  .matrix th, .matrix td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+  .matrix thead th { background: var(--ms-blue); color: #fff; font-weight: 600; font-size: 13px; }
+  .matrix thead th.mark { text-align: center; width: 88px; }
+  .matrix td.mark { text-align: center; font-weight: 700; white-space: nowrap; }
+  .matrix tbody tr:nth-child(even) td { background: var(--surface-alt); }
+  .matrix td.task { font-weight: 600; color: var(--text); }
+  .matrix td.why { color: var(--muted-text); font-size: 13.5px; }
+  .m-best { color: #2EA043; }
+  .m-ok { color: #5B7CB5; }
+  .m-no { color: #AAB4CC; }
+  .legend { font-size: 13px; color: var(--muted-text); margin: 4px 0 18px; }
+  .legend strong { font-weight: 700; }
+  .choice-card { border-top-width: 3px; }
+  .choice-card .where { display: block; margin-top: 8px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--ms-accent); }
+
+  .pill {
+    display: inline-block;
+    background: var(--ms-blue);
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+  }
+  .toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 6px; }
+  .tool-chip {
+    font-size: 12px; font-weight: 600; color: var(--ms-mid);
+    background: var(--surface); border: 1px solid var(--ms-light);
+    border-radius: 20px; padding: 3px 11px;
+  }
+
+  footer {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 22px 24px 50px;
+    color: var(--muted-text);
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 600px) {
+    .header-meta { margin-left: 0; text-align: left; width: 100%; }
+    .tab-btn { padding: 13px 14px; font-size: 14px; }
+  }
+  /* ---------- Pill sub-navigation ---------- */
+  .pill-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--muted-text); margin: 0 0 8px; }
+  .pill-nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 24px; }
+  .pill-nav .pill-btn { appearance: none; font-family: inherit; font-size: 14px; font-weight: 600; color: var(--ms-mid); background: var(--surface); border: 1px solid var(--ms-light); border-radius: 20px; padding: 8px 16px; cursor: pointer; transition: background 0.15s, color 0.15s, border-color 0.15s; }
+  .pill-nav .pill-btn:hover { background: var(--surface-alt); }
+  .pill-nav .pill-btn.active { background: var(--ms-blue); color: #fff; border-color: var(--ms-blue); }
+  .subpanel { display: none; animation: fade 0.25s ease; }
+  .subpanel.active { display: block; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <span class="ms-logo" aria-label="Microsoft">
+      <span class="ms-squares" aria-hidden="true"><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span></span>
+    </span>
+    <span class="header-divider" aria-hidden="true"></span>
+    <span class="msw-logo" aria-label="Morgan Stanley" title="Morgan Stanley">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 90" role="img" aria-hidden="true">
+        <path fill="#ffffff" fill-rule="nonzero" d="m 280.95313,21.730467 c 0,0 2e-5,32.320313 0,32.320313 0,1.59691 0.83455,2.529765 1.69532,3.117188 0.92269,0.619552 2.27679,0.929706 4.10156,0.929687 1.15435,0 2.67967,-0.382811 2.67969,-0.382811 0,0 -2e-5,-2.898421 0,-2.898439 -0.45784,0.0284 -0.86317,0.05469 -1.3125,0.05469 -2.71644,0 -3.11723,-1.061235 -3.11719,-2.242188 0,0 -5e-5,-30.898421 0,-30.898438 z m -85.47656,0.328125 c -3.05025,0 -5.80781,0.956777 -7.76562,2.679687 -1.90119,1.680578 -2.95314,4.00036 -2.95314,6.507813 6e-5,2.761623 1.11761,4.91946 3.44531,6.617187 2.05295,1.499121 4.76833,2.467045 7.38283,3.390625 4.54493,1.616634 8.80468,3.092058 8.80468,7.21875 0,1.835244 -0.62431,3.408634 -1.80468,4.484376 -1.29787,1.182983 -3.1651,1.75 -5.63283,1.75 -4.32532,0 -7.47424,-2.394875 -9.24217,-7.054687 -2e-5,0 -3.88283,1.039062 -3.88283,1.039062 0.83629,1.88979 2.25882,4.617025 4.32032,6.453125 2.2603,2.027918 5.06604,3.007813 8.58594,3.007813 4.16829,0 7.33249,-1.0752 9.40624,-3.226563 2.14986,-2.239597 2.625,-5.105747 2.625,-7.109375 0,-2.871137 -1.21361,-5.088178 -3.66406,-6.835937 -2.13932,-1.534541 -4.90764,-2.523588 -7.60156,-3.445314 -4.38939,-1.500975 -8.57784,-2.929429 -8.53125,-6.617187 0.0155,-1.719568 0.61183,-3.05816 1.69531,-3.992188 1.10423,-0.94885 2.67794,-1.421875 4.70314,-1.421875 2.12716,1.8e-5 4.02391,0.594563 5.46875,1.75 1.3287,1.052328 2.29556,2.614063 2.73437,4.375 1e-5,0 3.77343,-0.492186 3.77343,-0.492186 -1.65547,-5.643839 -5.7015,-9.078126 -11.86718,-9.078126 z M 22.5,22.550779 v 35.109376 h 4.046875 V 25.558592 l 0.109375,0.109375 9.625,31.992188 h 3.117188 l 9.679688,-31.992188 0.05469,-0.109375 v 32.101563 h 4.046876 V 22.550779 h -6.726567 l -8.585937,28.21875 v 0.109376 l -0.05469,-0.109376 -8.585939,-28.21875 z m 192.66407,0.710938 v 8.421875 h -3.88282 v 3.226562 c 0,0 3.88282,1.8e-5 3.88282,0 0,0 0,18.046001 0,19.140626 0,1.59691 0.7269,2.529765 1.58594,3.117188 0.92444,0.619552 2.27481,0.929706 4.10155,0.929687 1.15588,0 2.73434,-0.382811 2.73439,-0.382811 0,0 -5e-5,-2.898421 0,-2.898439 -0.44932,0.0284 -0.91961,0.05469 -1.36719,0.05469 -2.71994,0 -3.00785,-1.061235 -3.00781,-2.242188 0,0 -4e-5,-17.718732 0,-17.718751 h 4.375 v -3.226558 h -4.375 V 23.261717 Z M 69.585939,31.191404 c -3.407687,0 -6.295834,1.373015 -8.3125,3.937501 -1.871608,2.393317 -2.898438,5.774283 -2.898438,9.515625 1.7e-5,3.74479 1.026813,7.119595 2.898438,9.515625 2.016683,2.571275 4.904813,3.9375 8.3125,3.9375 3.421688,0 6.301103,-1.366225 8.312501,-3.9375 1.871852,-2.39603 2.898437,-5.770835 2.898437,-9.515625 -1.7e-5,-3.741342 -1.026602,-7.122291 -2.898437,-9.515625 -2.011398,-2.564485 -4.890813,-3.937501 -8.312501,-3.937501 z m 233.460941,0.05469 c -1.7297,0 -3.33812,0.31794 -4.70312,0.929687 -1.33592,0.60214 -2.52262,1.508675 -3.44531,2.679689 -1.83533,2.298256 -2.89844,5.710249 -2.89844,9.84375 -3e-5,4.600435 1.32191,8.11069 3.71875,10.445311 2.52827,2.467851 5.74982,2.953125 7.98437,2.953125 5.80647,0 8.65507,-3.141651 9.84376,-6.015624 -6e-5,0 -3.22657,-1.585938 -3.22657,-1.585938 -0.78463,1.749807 -2.58715,4.429688 -6.61719,4.429688 -2.30347,0 -4.18753,-0.94304 -5.52343,-2.679687 -1.29082,-1.68056 -2.01644,-4.006679 -2.02344,-6.78125 2e-5,1.7e-5 17.71875,0 17.71875,0 4e-5,1.7e-5 0,-2.460939 0,-2.460939 4e-5,-4.250977 -1.13204,-7.421067 -3.22656,-9.351562 -1.7833,-1.639855 -4.28509,-2.40625 -7.60157,-2.40625 z m -192.00782,0.05469 c -4.56569,0 -11.04687,3.072109 -11.04687,13.398439 0,10.026432 6.461,13.398438 10.82812,13.398438 2.54886,1.8e-5 4.865,-1.412093 6.45313,-3.445313 -2e-5,1.7e-5 0.21876,-0.109375 0.21876,-0.109375 1e-5,1.8e-5 0,4.921876 0,4.921876 1e-5,3.45198 -2.9877,5.578125 -6.1797,5.578125 -3.10336,1.7e-5 -5.85069,-0.592498 -8.09375,-1.640625 -3e-5,0 0,3.5 0,3.5 1.88888,0.80962 4.96277,1.3125 7.60156,1.3125 7.18373,1.7e-5 10.60939,-3.953723 10.60939,-9.679689 1e-5,0 0,-26.742187 0,-26.742187 h -3.00781 c 0,0 -0.87501,2.734375 -0.87501,2.734375 -1.48469,-1.93452 -3.42848,-3.226564 -6.50782,-3.226564 z m 26.14064,0 c -5.74766,0 -8.46893,3.442986 -9.62501,5.578126 0,0 3.22656,1.695313 3.22656,1.695313 0.4528,-1.22003 2.08295,-4.046875 6.45313,-4.046875 3.44592,0 5.19532,1.52082 5.19532,4.539062 0,0 0,0.929688 0,0.929688 2e-5,0 0.0282,0.28259 -0.0547,0.382812 -0.12799,0.161578 -0.49089,0.29372 -1.3672,0.382813 -4.82472,0.5383 -8.03162,1.3307 -10.39061,2.84375 -2.5609,1.645998 -4.15626,3.950521 -4.15626,7.109375 0,2.243938 1.08653,4.159121 2.51563,5.523437 1.32889,1.256449 3.1395,1.910109 5.14063,1.96875 4.25969,0.136641 7.06365,-1.636266 8.42187,-3.718749 0.10539,1.43087 0.61819,2.248453 1.74999,2.84375 1.06296,0.567683 2.80634,0.454772 3.55469,0.273437 0,1.7e-5 0,-2.734375 0,-2.734375 -0.90212,-0.04505 -1.47655,-0.474022 -1.47655,-1.585938 -6e-5,0 0,-12.523437 0,-12.523437 -6e-5,0 0,-1.640625 0,-1.640625 -3e-5,-2.584453 -1.01435,-4.704368 -2.95313,-6.070313 -1.59857,-1.134386 -3.8323,-1.750001 -6.23437,-1.750001 z m 27.83593,0 c -2.63379,1.9e-5 -5.32918,1.36437 -7.60156,3.937501 V 31.79298 h -4.04688 v 25.921868 h 4.04688 c 4e-5,0 0,-19.25 0,-19.25 1.37707,-1.471454 4.46359,-3.9375 7.27343,-3.9375 2.81687,0 4.04688,1.381695 4.04688,4.484374 -4e-5,0 0,18.703126 0,18.703126 h 4.04688 c 0,0 0,-18.8125 0,-18.8125 0,-5.600649 -3.98301,-7.601564 -7.76563,-7.601564 z m 73.22657,0 c -5.74443,0 -8.4652,3.442986 -9.62501,5.578126 6e-5,0 3.22657,1.695313 3.22657,1.695313 0.45453,-1.22003 2.08273,-4.046875 6.45313,-4.046875 3.44552,0 5.19531,1.52082 5.19531,4.539062 -2e-5,0 0,0.929688 0,0.929688 -4e-5,0 -0.0282,0.28259 -0.10938,0.382812 -0.12626,0.161578 -0.43289,0.29372 -1.3125,0.382813 -4.82478,0.537337 -8.03185,1.3307 -10.39062,2.84375 -2.55939,1.645998 -4.15625,3.950521 -4.15625,7.109375 3e-5,2.243938 1.08456,4.158245 2.51561,5.523437 1.32895,1.256449 3.14126,1.910109 5.14063,1.96875 4.25624,0.136641 7.06366,-1.636266 8.42188,-3.718749 0.10713,1.43024 0.61621,2.248453 1.75,2.84375 1.06091,0.567683 2.80481,0.454772 3.55469,0.273437 -2e-5,1.7e-5 0,-2.734375 0,-2.734375 -0.90039,-0.04505 -1.47656,-0.474022 -1.47656,-1.585938 -2e-5,0 0,-12.523437 0,-12.523437 -2e-5,0 0,-1.640625 0,-1.640625 -4e-5,-2.584453 -1.06707,-4.704368 -3.00781,-6.070313 -1.60017,-1.134386 -3.77935,-1.750001 -6.17969,-1.750001 z m 27.83593,0 c -2.64074,1.9e-5 -5.32939,1.36437 -7.60156,3.937501 V 31.79298 h -4.04687 v 25.921868 h 4.04687 c -2e-5,0 0,-19.25 0,-19.25 1.37899,-1.47231 4.46009,-3.9375 7.27343,-3.9375 2.8116,0 4.04689,1.381695 4.04689,4.484374 0,0 0,18.703126 0,18.703126 h 4.04687 c 0,0 0,-18.8125 0,-18.8125 0,-5.600649 -3.98301,-7.601564 -7.76563,-7.601564 z M 98.46094,31.410154 c -4.105938,0 -6.539313,1.591889 -8.640626,5.359376 V 36.496092 31.792968 H 85.77344 v 25.867187 h 4.046874 c 0,1.8e-5 0,-14.65625 0,-14.65625 0.999041,-5.324252 3.817854,-7.820313 8.640626,-7.820313 0,0 0,-3.773438 0,-3.773438 z m 218.14845,0.328125 9.02343,25.703126 c -2e-5,0 0,0.21875 0,0.21875 -0.53923,2.463389 -2.09869,5.50431 -3.5,6.453125 -1.23751,0.839878 -2.57775,0.929688 -3.60937,0.929688 -0.4979,0 -1.52644,-0.168123 -1.96875,-0.273438 2e-5,0 0,3.117189 0,3.117189 0.5598,0.137374 1.85193,0.382812 2.67969,0.382812 1.92846,1.8e-5 3.55491,-0.482772 4.92187,-1.476563 1.63648,-1.189668 3.44946,-4.2903 4.32031,-6.945313 -3e-5,0 9.02344,-28.109376 9.02344,-28.109376 h -3.9375 l -5.90625,19.906251 -0.0547,0.437499 -0.10937,-0.437499 -6.94531,-19.90625 z M 69.585939,34.417968 c 4.356625,0 6.945313,3.82396 6.945313,10.226562 -3.5e-5,6.404335 -2.588688,10.226563 -6.945313,10.226563 -4.349626,0 -6.945313,-3.822228 -6.945313,-10.226563 -3.4e-5,-6.402602 2.595687,-10.226562 6.945313,-10.226562 z m 41.726561,0.05469 c 2.28314,0 4.2875,0.98651 6.1797,3.335938 1e-5,0 0,12.359375 0,12.359375 -1.04737,2.981091 -4.04711,4.703125 -6.1797,4.703125 -4.17328,0 -7.05469,-2.598628 -7.05469,-10.390624 5e-5,-6.551966 2.58586,-10.007814 7.05469,-10.007814 z m 191.84376,0 c 4.63643,0 6.70927,2.451733 6.72656,7.765625 6e-5,0 -13.61719,0 -13.61719,0 0.35263,-5.309586 2.57732,-7.765625 6.89063,-7.765625 z m -160.61719,9.132813 c 3e-5,0 0,6.5625 0,6.5625 -0.18656,2.265655 -4.4205,5.007783 -7.875,4.812501 -1.90594,-0.104529 -3.74237,-1.63926 -3.9375,-4.15625 -0.31632,-4.206074 2.84418,-5.952381 9.89843,-6.726563 0.49071,-0.04492 1.44046,-0.219135 1.91407,-0.492188 z m 101.0625,0 c 1e-5,0 0,6.5625 0,6.5625 -0.18657,2.264658 -4.4205,5.007783 -7.875,4.812501 -1.90273,-0.105403 -3.74762,-1.640135 -3.9375,-4.15625 -0.32131,-4.206074 2.84265,-5.952381 9.89844,-6.726563 0.48732,-0.04492 1.44397,-0.219135 1.91406,-0.492188 z"/>
+      </svg>
+    </span>
+    <div class="header-text">
+      <h1>Microsoft 365 Copilot</h1>
+      <p>Hands-on enablement sessions for teams across Morgan Stanley</p>
+    </div>
+  </div>
+</header>
+
+<nav class="tabbar" aria-label="Sections">
+  <div class="tabbar-inner">
+    <button class="tab-btn active" data-tab="intro">Introduction</button>
+    <button class="tab-btn" data-tab="prompting">Prompting</button>
+    <button class="tab-btn" data-tab="prompts">Prompts</button>
+    <button class="tab-btn" data-tab="agents">Agents 101</button>
+    <button class="tab-btn" data-tab="whentouse">When to use what</button>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ================= INTRODUCTION ================= -->
+  <section class="panel active" id="intro">
+    <span class="pill">Welcome</span>
+    <h2 class="section-title">Getting more done with Microsoft 365 Copilot</h2>
+    <p class="lede">Welcome! This page is your take-home companion for today's session. Everything we demo live is here for you to copy, try, and reuse at your own desk. No notes to take &#8212; just click <strong>Copy</strong> on any prompt and paste it into Copilot.</p>
+
+    <h3 class="group"><span class="step-num">1</span> What is Microsoft 365 Copilot?</h3>
+    <p class="scene" style="margin-left:0; font-style:normal;">Microsoft 365 Copilot is your AI assistant woven into the apps you already use &#8212; Outlook, Word, PowerPoint, Excel, and Teams &#8212; plus the Microsoft 365 Copilot chat that searches across all of them. It works over <em>your</em> emails, meetings, and files (securely, inside your Microsoft 365 tenant), so the help you get is grounded in your real work, not generic answers.</p>
+
+    <div class="card-grid">
+      <div class="info-card"><h4>Day in the Life</h4><p>High-impact prompts that span your everyday apps &#8212; Outlook, Word, PowerPoint, Excel, and Teams.</p></div>
+      <div class="info-card"><h4>Agents</h4><p>Reusable, purpose-built assistants you create yourself in Agent Builder &#8212; no code required.</p></div>
+      <div class="info-card"><h4>Workshop</h4><p>You'll build your own agent live, using a starter prompt you can adapt to your team.</p></div>
+      <div class="info-card"><h4>Take it home</h4><p>This site is yours. Bookmark it, share it with your peers, and keep experimenting.</p></div>
+    </div>
+
+    <h3 class="group"><span class="step-num">2</span> Today's agenda (60 minutes)</h3>
+    <table class="agenda-table">
+      <thead><tr><th>Time</th><th>Segment</th><th>What we'll cover</th></tr></thead>
+      <tbody>
+        <tr><td>5 min</td><td>Introduction</td><td>Why Copilot, and how today works</td></tr>
+        <tr><td>15 min</td><td>Day in the Life</td><td>Live demo of high-impact prompts for your role</td></tr>
+        <tr><td>20 min</td><td>Agents Introduction</td><td>Demo an agent built in Agent Builder, and how it was made</td></tr>
+        <tr><td>10 min</td><td>Agents Workshop</td><td>Build the agent together in Agent Builder</td></tr>
+        <tr><td>10 min</td><td>Q&amp;A</td><td>Your questions</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="group"><span class="step-num">3</span> How to read these prompts</h3>
+    <div class="tip"><strong>We'll move across your apps.</strong> Each prompt is tagged with where to run it &#8212; Outlook, Word, PowerPoint, Excel, Teams, or the Microsoft 365 Copilot chat &#8212; so you see Copilot everywhere you work. In Word, PowerPoint, and Excel, just look for the <strong>Copilot</strong> button to begin. A couple of EA prompts use the executive's shared mailbox (those are marked). When a prompt shows something in <code>[brackets]</code>, that's a file or meeting to attach &#8212; type <code>/</code> to link it.</div>
+    <p style="margin-top:14px;">New to writing prompts? The <strong>Prompting</strong> tab covers how to get great results every time.</p>
+
+    <p style="margin-top:24px;">When you're ready, head to the <strong>Prompts</strong> tab and pick your role to follow along with the demo.</p>
+  </section>
+
+  <!-- ================= PROMPTING ================= -->
+  <section class="panel" id="prompting">
+    <span class="pill">Prompting</span>
+    <h2 class="section-title">How to get the most out of Copilot</h2>
+    <p class="lede">A great prompt can have up to four parts &#8212; <strong>Goal, Context, Source,</strong> and <strong>Expectations</strong>. Only the goal is required; add the others to sharpen the result. The more direction you give, the more useful the answer.</p>
+
+    <h3 class="group"><span class="step-num">1</span> The four building blocks</h3>
+    <div class="card-grid">
+      <div class="info-card"><h4>Goal &middot; required</h4><p>What you want Copilot to do. Start with a verb &#8212; <em>"Summarize&#8230;", "Draft&#8230;", "Create a table&#8230;"</em></p></div>
+      <div class="info-card"><h4>Context</h4><p>Why you're asking and who it's for &#8212; <em>"&#8230;for my executive ahead of the Business Operations Review."</em></p></div>
+      <div class="info-card"><h4>Source</h4><p>What Copilot should use. Point it at emails, a meeting, or a file by typing <code>/</code> &#8212; <em>"&#8230;based on the Atlas launch emails this week."</em></p></div>
+      <div class="info-card"><h4>Expectations</h4><p>The shape of the answer &#8212; format, length, tone &#8212; <em>"&#8230;in five bullets, friendly tone, under 150 words."</em></p></div>
+    </div>
+
+    <h3 class="group"><span class="step-num">2</span> Put it together</h3>
+    <p class="scene" style="margin-left:0;">Start with just a goal, then layer in the other parts to go from a generic answer to exactly what you need.</p>
+    <div class="tip"><strong>Just a goal &#8594;</strong> <em>"Summarize my emails."</em></div>
+    <div class="prompt-card">
+      <div class="prompt-head"><span class="prompt-label">Goal + Context + Source + Expectations</span><button class="copy-btn">Copy</button></div>
+      <pre class="prompt-text">Summarize the emails from the Atlas launch team over the past week so I can brief my executive ahead of tomorrow's Business Operations Review. Group them into what needs a decision and what's just an update, and keep it to five short bullet points.</pre>
+    </div>
+    <div class="tip"><strong>Why it works:</strong> it names the <em>goal</em> (summarize), the <em>source</em> (the Atlas launch emails this week), the <em>context</em> (a brief for the executive before the Business Operations Review), and the <em>expectations</em> (grouped, five bullets). Every prompt on the Prompts tab is built the same way.</div>
+
+    <h3 class="group"><span class="step-num">3</span> A few habits that make prompts better</h3>
+    <div class="card-grid">
+      <div class="info-card"><h4>Be specific about the output.</h4><p>Ask for a table, a number of bullets, a word count, or a tone. Vague in, vague out.</p></div>
+      <div class="info-card"><h4>Give it your content.</h4><p>Type <code>/</code> to point Copilot at a specific email, meeting, file, or person, so it works from your real information instead of guessing.</p></div>
+      <div class="info-card"><h4>Iterate &#8212; it's a conversation.</h4><p>The first answer is a starting point. Follow up with "make it shorter," "more formal," or "add a section on risks." Copilot remembers the thread.</p></div>
+      <div class="info-card"><h4>Always review.</h4><p>Copilot gives you a fast first draft, not the final word. Check names, numbers, and dates before you send or share.</p></div>
+    </div>
+  </section>
+
+  <!-- ================= PROMPTS ================= -->
+  <section class="panel" id="prompts">
+    <div class="pill-group">
+      <p class="pill-label">Choose your role</p>
+      <div class="pill-nav">
+        <button class="pill-btn" data-sub="sub-cos">Chief of Staff</button>
+        <button class="pill-btn" data-sub="sub-ea">Executive Admin</button>
+        <button class="pill-btn" data-sub="sub-leaders">Director &amp; MD</button>
+        <button class="pill-btn active" data-sub="sub-itleaders">IT Leader</button>
+        <button class="pill-btn" data-sub="sub-finance">Finance</button>
+        <button class="pill-btn" data-sub="sub-hr">Human Resources</button>
+        <button class="pill-btn" data-sub="sub-sales">Sales &amp; Advisory</button>
+        <button class="pill-btn" data-sub="sub-marketing">Marketing</button>
+        <button class="pill-btn" data-sub="sub-legal">Legal &amp; Compliance</button>
+        <button class="pill-btn" data-sub="sub-ops">Operations</button>
+      </div>
+
+      <div class="subpanel" id="sub-cos">
+        <span class="pill">Chiefs of Staff</span>
+        <h2 class="section-title">Running the leadership operating rhythm</h2>
+        <p class="lede">These prompts walk through a chief of staff's week &#8212; synthesizing what matters, running the leadership meeting, turning information into decisions, and communicating outward &#8212; and they span the tools you use to do it: the Microsoft 365 Copilot chat, Word, Excel, PowerPoint, Teams, and Outlook.</p>
+
+        <div class="tip"><strong>Where to run these.</strong> Each prompt is tagged with its app &#8212; the Copilot chat for pulling across sources, Word and PowerPoint for documents and decks, Excel for the data, Teams for the recap, and Outlook for the message. Where you see something in <code>[brackets]</code>, attach that file or meeting by typing <code>/</code>.</div>
+
+        <h3 class="group"><span class="step-num">1</span> Monday: synthesize the week</h3>
+        <p class="scene">You start the week by cutting through the noise &#8212; across email, Teams, and files &#8212; to see what moved and what needs a decision.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Microsoft 365 Copilot</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Summarize the most important updates, decisions, and risks across my email, Teams messages, and recent files from the past week, organized around our top strategic priorities. For each risk or blocker, note who owns it and what decision or help is needed to move it forward.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">2</span> Leadership Meetings Week Prep</h3>
+        <p class="scene">It's week-prep time. You pull the week's leadership meetings into shape, starting with the Business Operations Review.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Word</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Help me with Leadership Meetings Week Prep. Using the action items in [link last week's meeting notes], draft the agenda for this week's Business Operations Review. Start from the open items, add the top two or three decisions we need to make this week, and propose time allocations so everything fits in 60 minutes. Format it as a clean agenda I can paste into the invite.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">3</span> Build the leadership update deck</h3>
+        <p class="scene">Leadership wants the picture on a few slides, not in a wall of text. You let Copilot draft it for the Business Review.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">PowerPoint</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Create a short leadership update presentation for our monthly Business Review: a title slide, a slide on progress against our top three objectives, a slide on the key risks and the decisions we need, and a closing slide with next steps.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">4</span> Communicate outward</h3>
+        <p class="scene">Priorities for the half are set. Your leader needs to communicate them clearly and credibly.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Outlook</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Draft a message to the broader organization announcing our operating priorities for the second half of the year. Connect them to our strategy and keep it confident and motivating without sounding corporate, at around 300 words. Give me an email version and a shorter version I can adapt for a Teams post.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">5</span> Analyze the objective scorecard</h3>
+        <p class="scene">The monthly scorecard is in. You want the health picture across objectives and anything that just slipped.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Excel</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Analyze this objective scorecard / tracker and tell me how many objectives are green, yellow, and red, broken down by business unit. Highlight any objective that slipped to red since last month, and give me a two-sentence summary I can share with leadership.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">6</span> Synthesize the Business Ops Review</h3>
+        <p class="scene">The monthly Business Operations Review materials just landed. Your leader needs the signal, not the noise &#8212; on one page.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Word</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Review the monthly Business Operations Review materials in [link the Business Ops Review file] and write a one-page executive summary: what's on track, what's at risk, and the three things that need leadership attention this month. Call out any numbers that moved significantly versus last month.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">7</span> Recap the meeting</h3>
+        <p class="scene">The meeting's over. You send a crisp recap so decisions and owners are unambiguous.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Teams</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Recap this meeting for me: lead with the decisions that were made, then list the action items by owner with due dates, and close with anything we explicitly parked for a future discussion. Keep it concise enough to send to the team.</pre>
+        </div>
+
+        <div class="tip"><strong>Your turn:</strong> point these at your real priorities, your real business review, your real meeting. Then see the <strong>Agents 101</strong> tab to package this whole rhythm into a reusable Chief of Staff agent.</div>
+      </div>
+
+      <div class="subpanel" id="sub-ea">
+        <span class="pill">Executive Admins</span>
+        <h2 class="section-title">A day across your apps</h2>
+        <p class="lede">These prompts follow an executive admin through the day &#8212; and they move across the apps you already use: the Microsoft 365 Copilot chat, Outlook, Word, PowerPoint, Excel, and Teams. Each is tagged with where to run it. Two use the executive's shared mailbox (marked); the rest are your own.</p>
+
+        <div class="tip"><strong>Where to run these.</strong> Each prompt shows the app it belongs in. The two tagged <span style="color:#b06f10; font-weight:700;">Exec mailbox</span> open the executive's shared mailbox in Outlook; everything else runs on your own data and apps. In Word, PowerPoint, and Excel, click the <strong>Copilot</strong> button and paste the prompt right in.</div>
+
+        <h3 class="group"><span class="step-num">1</span> Start the day with a morning brief</h3>
+        <p class="scene">Coffee in hand, you ask Copilot to pull your world together &#8212; what happened overnight, what's on today, and what needs you.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Microsoft 365 Copilot</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Give me a morning brief for today. Summarize the emails and Teams messages I've received since yesterday afternoon that need my attention, list my meetings today with their times and who's attending, and call out anything that's time-sensitive or that I'm waiting on from someone else.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">2</span> Turn the exec's inbox into a briefing</h3>
+        <p class="scene">Your leader is back-to-back all morning. In seconds, you turn their whole inbox into a prioritized briefing.</p>
+        <div class="prompt-card exec">
+          <div class="prompt-head"><span class="prompt-label">Outlook <span class="exec-tag">Exec mailbox</span></span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Summarize the emails in this mailbox from the last several days and group them into three lists: needs the executive's decision, things I can handle, and FYI only. For each email, give me a one-line summary, who it's from, and the specific ask or deadline. Put the most urgent items first.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">3</span> Draft a reply in seconds</h3>
+        <p class="scene">The launch team needs a decision. You open their email and Copilot writes the reply for you to review and send.</p>
+        <div class="prompt-card exec">
+          <div class="prompt-head"><span class="prompt-label">Outlook <span class="exec-tag">Exec mailbox</span></span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Draft a reply to this email that approves the June 30 Atlas launch date, thanks the team for the strong work, and asks them to send the final run-of-show by Wednesday. Keep it warm, professional, and under 120 words.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">4</span> Prep for your next meeting</h3>
+        <p class="scene">You've got a meeting coming up on your own calendar. In one prompt, Copilot gets you ready &#8212; who's coming, what it's about, and the latest context.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Microsoft 365 Copilot</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Help me prepare for my next meeting on my calendar. Tell me what it's about, who's attending and their roles, summarize the most recent emails and files related to it, and suggest three things I should be ready to discuss.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">5</span> Create a reusable template</h3>
+        <p class="scene">You take notes in every meeting. Instead of rebuilding the format each time, you have Copilot make a clean template once.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Word</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Create a reusable meeting notes template I can use for any meeting. Include sections for the meeting title, date, attendees, agenda, key discussion points, decisions made, and action items with an owner and due date for each. Keep it clean and professional with clear headings.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">6</span> Build a quick deck</h3>
+        <p class="scene">A new executive is joining. You need a short, polished intro deck &#8212; and you'd rather not start from a blank slide.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">PowerPoint</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Create a short, clean presentation introducing our team to a new executive: a title slide, a slide on who we are, a slide on what we're focused on this quarter, and a closing slide with how to reach us.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">7</span> Spin up a simple tracker</h3>
+        <p class="scene">Expense season again. Instead of hunting for a template, you let Copilot build one.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Excel</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Create a simple travel-expense tracker with columns for date, category, description, and amount, and add a row at the bottom that totals the amounts. Make the header row bold.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">8</span> Catch up on a busy chat</h3>
+        <p class="scene">You stepped away for a few hours. Rather than scroll, you ask Copilot what you missed.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Teams</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Catch me up on what I missed in this chat over the last day. Pull out the key updates, any questions directed at me, and anything that needs a response, and list them so I can act quickly.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">9</span> Find the answer across everything</h3>
+        <p class="scene">Your leader asks "where are we on Atlas?" You get a grounded status in one prompt &#8212; no digging.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Microsoft 365 Copilot</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Find the most recent files and emails about the Atlas launch and give me a short status update I can share with my executive &#8212; what's on track, what's still pending, and any open decisions.</pre>
+        </div>
+
+        <div class="tip"><strong>Your turn:</strong> point these at a real email, a real topic, or a real deck and watch how much time they save. The <strong>Agents 101</strong> tab shows how to turn your favorites into a one-click assistant.</div>
+      </div>
+
+      <div class="subpanel" id="sub-leaders">
+        <span class="pill">Directors &amp; Managing Directors</span>
+        <h2 class="section-title">Leading with Copilot</h2>
+        <p class="lede">These prompts are for the leaders the chiefs of staff and executive admins support &#8212; the leadership operating committee, director through managing director. They follow a leader's day and span the apps you use to run the business: the Microsoft 365 Copilot chat, Excel, Word, Outlook, and PowerPoint.</p>
+
+        <div class="tip"><strong>Where to run these.</strong> Each prompt is tagged with its app. They run on your own mailbox, calendar, and files &#8212; you have full access to your own information &#8212; and the external-intelligence prompt uses Copilot's <strong>web</strong> search (look for the web option). In Word, Excel, and PowerPoint, click the <strong>Copilot</strong> button and paste the prompt right in.</div>
+
+        <h3 class="group"><span class="step-num">1</span> Start the day with an executive brief</h3>
+        <p class="scene">You lead a large org and can't possibly read it all. Before your first meeting, you ask Copilot for the signal.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Microsoft 365 Copilot</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Give me an executive brief for today. Summarize the most important emails and Teams messages since yesterday &#8212; especially anything escalated to me, decisions waiting on me, or risks to my priorities &#8212; and list my meetings today with what each is about and what's expected of me. End with the two or three things I shouldn't let slip.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">2</span> Prep in depth for a key meeting</h3>
+        <p class="scene">You've got a high-stakes review this afternoon. In one prompt, Copilot gets you fully prepared.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Microsoft 365 Copilot</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Prepare me in depth for my next leadership meeting. Tell me its purpose and the outcome we're after, who's attending and their roles, and summarize the most recent emails, files, and decisions related to it. Then lay out the open questions and where people disagree, and give me a clear point of view plus three sharp questions I can ask to move the group to a decision.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">3</span> Scan the outside world</h3>
+        <p class="scene">Before you set direction, you want the outside-in view &#8212; what's moving in your market and with competitors.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Microsoft 365 Copilot &#183; web</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Give me a current external intelligence brief for the financial services industry: the three or four most significant developments over the last month across competitors, markets, technology, and regulation that could affect our strategy. For each one, explain why it matters to us and suggest one implication or action for my team. Include sources.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">4</span> Find the story in the numbers</h3>
+        <p class="scene">A stack of results just landed. You need the story the data is telling, not the rows.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Excel &#183; or Microsoft 365 Copilot</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Analyze this results data and give me the three things leadership should take away &#8212; what's improving, what's slipping, and where we're off plan. Call out the biggest change since last period and one hypothesis for why, and keep it to a short, decision-ready summary.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">5</span> Turn a call into a decision memo</h3>
+        <p class="scene">You need to make a call and bring people with you. You turn your thinking into a crisp one-pager.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Word</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Help me write a one-page decision memo on [the decision I'm facing]. Lay out the context and why it matters now, the options with the key trade-offs of each, the risks, and my recommendation with the reasoning behind it. Keep it direct and executive-ready, with clear headings a busy leader can skim.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">6</span> Set direction for your organization</h3>
+        <p class="scene">The direction is set. Now your whole org needs to understand it &#8212; and feel it.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Outlook</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Draft a message to my organization setting expectations for the coming quarter. Connect our goals to the bigger strategy, be clear about the top three priorities and what I need from each team, and keep the tone confident and motivating without sounding corporate. Around 300 words, with a three-bullet summary at the top.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">7</span> Build your operating committee update</h3>
+        <p class="scene">You're up in front of the operating committee this week. You'd rather refine a draft than build slides from a blank page.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">PowerPoint</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Create a short operating committee update deck: a title slide, a slide on progress against my top three priorities, a slide on the risks and the decisions I need from the committee, a slide on the metrics that matter, and a closing slide with what I need from the group.</pre>
+        </div>
+
+        <div class="tip"><strong>Your turn:</strong> point these at your real priorities, your real meeting, and your real numbers. The other roles on the <strong>Prompts</strong> tab pair well too &#8212; your chiefs of staff and assistants can run those on your behalf.</div>
+      </div>
+
+      <div class="subpanel active" id="sub-itleaders">
+        <span class="pill">Technology &amp; IT Leadership</span>
+        <h2 class="section-title">A day in the life of a technology leader</h2>
+        <p class="lede">These prompts follow a Morgan Stanley technology leader through the day &#8212; from the morning signal to setting technical direction &#8212; and they span the apps you use to run your organization: the Microsoft 365 Copilot chat, Outlook, Excel, Word, PowerPoint, and Teams. They're built for the people in the room: the divisional CTOs, the CISO, and the data, platform, and digital product leaders.</p>
+
+        <div class="tip"><strong>Where to run these.</strong> Each prompt is tagged with its app, and they run on your own mailbox, calendar, Teams, and files &#8212; you have full access to your own information. The external-intelligence prompt uses Copilot's <strong>web</strong> search (look for the web option). In Word, Excel, and PowerPoint, click the <strong>Copilot</strong> button and paste the prompt right in. Where you see something in <code>[brackets]</code>, attach that file, meeting, or channel by typing <code>/</code>.</div>
+
+        <h3 class="group"><span class="step-num">1</span> Start the day with a leadership brief</h3>
+        <p class="scene">You run a large technology organization and can't read it all. Before your first meeting, you ask Copilot for the signal &#8212; escalations, approvals, and the decisions waiting on you.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Microsoft 365 Copilot</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Give me a leadership brief for today. Summarize the most important emails and Teams messages since yesterday &#8212; especially anything escalated to me, decisions or approvals waiting on me, and updates on the projects and platforms I own &#8212; and list my meetings today with what each is about and what's expected of me. End with the two or three things I shouldn't let slip.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">2</span> Prep for a technology or governance review</h3>
+        <p class="scene">You've got an architecture, security, or portfolio review this afternoon. In one prompt, Copilot gets you fully prepared.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Microsoft 365 Copilot</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Prepare me in depth for my next architecture or engineering review on my calendar. Tell me its purpose and the outcome we're after, who's attending and their roles, and summarize the most recent emails, files, and decisions related to it. Then lay out the open questions, the technical risks, and where people disagree, and give me a clear point of view plus three sharp questions I can ask to move the group to a decision.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">3</span> Scan the outside world</h3>
+        <p class="scene">Before you set direction, you want the outside-in view &#8212; what's moving in technology, AI, cybersecurity, and regulation that could affect your plans.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Microsoft 365 Copilot &#183; web</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Give me a current external intelligence brief for [our industry]: the three or four most significant developments over the last month across AI, cloud and data platforms, cybersecurity, and financial regulation that could affect our technology strategy. For each one, explain why it matters to us and suggest one implication or action for my team. Include sources.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">4</span> Read the health of your portfolio</h3>
+        <p class="scene">A workbook just landed &#8212; cost, revenue, or platform performance. You need the story the numbers are telling, not the rows.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Excel &#183; or Microsoft 365 Copilot</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Analyze [attach a cost-and-revenue or platform-analytics workbook] and give me the three things leadership should take away &#8212; what's growing, what's underperforming, and where we're off plan on cost or revenue. Call out the biggest change and one hypothesis for why, flag anything that's a risk, and keep it to a short, decision-ready summary.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">5</span> Turn a technology decision into a one-page brief</h3>
+        <p class="scene">You need to make a call &#8212; build versus buy, a platform choice, a new standard &#8212; and bring people with you. You turn your thinking into a crisp one-pager.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Word</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Help me write a one-page decision brief on [the technology decision I'm facing]. Lay out the context and why it matters now, the options with the key trade-offs of each &#8212; including security, data, integration, regulatory, cost, and operational impact &#8212; the risks, and my recommendation with the reasoning behind it. Keep it direct and executive-ready, with clear headings a busy leader can skim.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">6</span> Set technical direction for your organization</h3>
+        <p class="scene">The direction is set. Now your whole organization needs to understand it &#8212; the priorities, and the standards you expect them to hold.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Outlook</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Draft a message to my technology organization setting expectations for the coming quarter. Connect our goals to the broader technology strategy, be clear about the top three priorities and what I need from each team, and keep the tone confident and motivating without sounding corporate. Around 300 words, with a three-bullet summary at the top.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">7</span> Build your leadership review update</h3>
+        <p class="scene">You're up in front of the technology leadership team this week. You'd rather refine a draft than build slides from a blank page.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">PowerPoint</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Create a short technology leadership update deck: a title slide, a slide on progress against my top three priorities, a slide on the key risks and the decisions I need from the group, a slide on the metrics that matter &#8212; roadmap progress, delivery milestones, and platform adoption &#8212; and a closing slide with what I need from the leadership team.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">8</span> Catch up on a busy channel</h3>
+        <p class="scene">You stepped out for a few hours during an incident or a live program. Rather than scroll, you ask Copilot what you missed.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Teams</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Catch me up on what I missed in [this channel] over the last day. Pull out the key updates and decisions, any questions directed at me, and anything that still needs a response or an approval, and list them so I can act quickly.</pre>
+        </div>
+
+        <div class="tip"><strong>Your turn:</strong> point these at your real portfolio, your real review, and your real numbers. The <strong>Agents 101</strong> tab shows how to turn your favorite into a one-click assistant &#8212; including the <strong>Platform Tech &amp; Roadmap Advisor</strong> we built for this group.</div>
+      </div>
+
+      <div class="subpanel" id="sub-finance">
+        <span class="pill">Finance</span>
+        <h2 class="section-title">Closing the books, faster and with more confidence</h2>
+        <p class="lede">These prompts follow a finance leader through a reporting cycle &#8212; reconciling data, explaining variances, and briefing stakeholders &#8212; using the Microsoft 365 Copilot chat, Excel, Word, Outlook, and PowerPoint.</p>
+
+        <div class="tip"><strong>Where to run these.</strong> Each prompt is tagged with its app. They run on your own files and mailbox; for shared finance workbooks, open them in Excel and use the in-app Copilot so it works on the live data and formulas.</div>
+
+        <h3 class="group"><span class="step-num">1</span> Explain the variance before someone asks</h3>
+        <p class="scene">The numbers moved. Before the call, you want the story behind them.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Excel</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Analyze this workbook and identify every line item that moved more than 5% versus budget and versus last quarter. Add a variance column in percentage terms, flag the three largest movements, and give me a plain-English explanation I can use on the call for each one.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">2</span> Reconcile and flag exceptions</h3>
+        <p class="scene">Two data sets should match and don't. You want the mismatches, not a manual line-by-line check.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Excel</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Compare these two tabs by account and period, and list every row where the values don't match within a $1,000 tolerance. Show both values and the difference, and group the exceptions by likely cause &#8212; timing, classification, or missing entry.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">3</span> Draft the management commentary</h3>
+        <p class="scene">The numbers are locked. Now you need the narrative that goes with them.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Word</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Using the attached results workbook, draft the management commentary section for this quarter's reporting pack: revenue and expense drivers, the three largest variances and why they happened, and a one-paragraph outlook. Keep the tone factual and precise, suitable for a regulated financial services audience.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">4</span> Prep for the business review</h3>
+        <p class="scene">You're presenting the numbers to leadership this week. You want to walk in ready for the hard questions.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Microsoft 365 Copilot</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Help me prepare for this week's finance business review. Summarize the latest results file and recent emails about budget risks, list the questions leadership is likely to ask based on what moved most, and draft a one-line answer I can give to each.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">5</span> Build the board-ready deck</h3>
+        <p class="scene">The commentary is written. Now it needs to be three slides, not three pages.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">PowerPoint</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Turn this results commentary into a concise finance update deck: a headline numbers slide, a variance-drivers slide, a risks-and-outlook slide, and a closing slide with the decisions we need. Keep language precise and avoid rounding that changes the meaning of a number.</pre>
+        </div>
+
+        <div class="tip"><strong>Your turn:</strong> point these at your real ledger, your real reporting pack, and your real board deck. Always verify totals and formulas before anything goes out &#8212; Copilot drafts the narrative, you own the numbers.</div>
+      </div>
+
+      <div class="subpanel" id="sub-hr">
+        <span class="pill">Human Resources</span>
+        <h2 class="section-title">Supporting people decisions with better information</h2>
+        <p class="lede">These prompts follow an HR partner through hiring, performance, and policy questions &#8212; using the Microsoft 365 Copilot chat, Word, Outlook, Excel, and Teams.</p>
+
+        <div class="tip"><strong>Where to run these.</strong> Each prompt runs on your own files, mailbox, and Teams. Never paste identifiable employee data into a prompt unless the tool and workflow are approved for that data &#8212; check with your HR systems and privacy team first.</div>
+
+        <h3 class="group"><span class="step-num">1</span> Draft the job description</h3>
+        <p class="scene">A hiring manager needs a role opened today, not next week.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Word</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Draft a job description for a [role title] on the [team/division] team. Include a short team overview, five to seven core responsibilities, required and preferred qualifications, and a note on our flexible working approach. Keep the tone professional and inclusive, and flag anywhere I should confirm the level and compensation banding before posting.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">2</span> Summarize interview feedback</h3>
+        <p class="scene">Five interviewers, five sets of notes. You need one clear recommendation.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Microsoft 365 Copilot</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Summarize the interview feedback emails for [candidate name] into a single panel summary: strengths, concerns, and a clear hire or no-hire lean from each interviewer, followed by an overall synthesis. Keep it factual and behavior-based, and don't infer anything the interviewers didn't say.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">3</span> Prepare for a difficult conversation</h3>
+        <p class="scene">A performance conversation is coming up. You want to walk in prepared, fair, and clear.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Microsoft 365 Copilot</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Help me prepare talking points for a performance conversation about [the specific, factual issue]. Structure it as: the specific behavior or gap, the impact, the expectation going forward, and the support available. Keep the tone direct but respectful, and do not draft anything that references protected characteristics or unverified assumptions.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">4</span> Answer a policy question fast</h3>
+        <p class="scene">An employee has a benefits or leave question and you want a correct, well-sourced answer.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Microsoft 365 Copilot</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Search our HR policy documents in [link the policy library] for our current guidance on [the topic, e.g. parental leave]. Summarize the policy in plain language, note any regional differences, and tell me plainly if the documents don't fully answer the question so I can escalate it.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">5</span> Build the onboarding plan</h3>
+        <p class="scene">A new hire starts Monday. You want their first 30 days mapped out, not improvised.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Word</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Create a 30-60-90 day onboarding plan template for a new [role title] joining the [team] team. Include key stakeholders to meet, systems access needed, milestone goals for each period, and a check-in cadence with the manager.</pre>
+        </div>
+
+        <div class="tip"><strong>Your turn:</strong> point these at your real requisitions, your real policy library, and your real onboarding plans. Keep sensitive personnel matters within approved, access-controlled tools.</div>
+      </div>
+
+      <div class="subpanel" id="sub-sales">
+        <span class="pill">Sales &amp; Advisory</span>
+        <h2 class="section-title">More time with clients, less time on admin</h2>
+        <p class="lede">These prompts follow a relationship manager or advisor through a client cycle &#8212; prep, follow-up, and pipeline &#8212; using the Microsoft 365 Copilot chat, Outlook, Word, Excel, and Teams.</p>
+
+        <div class="tip"><strong>Where to run these.</strong> Each prompt runs on your own calendar, mailbox, and files. Always follow your firm's suitability, disclosure, and record-keeping requirements for any client-facing material Copilot helps you draft.</div>
+
+        <h3 class="group"><span class="step-num">1</span> Prep for the client meeting</h3>
+        <p class="scene">You have back-to-back client meetings today. You want the full picture on each one before you walk in.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Microsoft 365 Copilot</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Help me prepare for my meeting with [client name] this afternoon. Summarize our most recent emails and meeting notes, remind me of any open commitments or follow-ups, and suggest three talking points based on what's changed since we last spoke.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">2</span> Turn meeting notes into a follow-up</h3>
+        <p class="scene">The meeting just ended. You want the follow-up email out before you're back at your desk.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Outlook</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Draft a follow-up email to [client name] summarizing what we discussed today, confirming the next steps and who owns each one, and proposing a date for our next check-in. Keep the tone warm and professional, and don't state anything as fact that wasn't confirmed in the meeting.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">3</span> Build the pipeline review</h3>
+        <p class="scene">It's pipeline review day. You want the picture across your book, not a manual roll-up.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Excel</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Analyze this pipeline workbook and tell me which opportunities are at risk of slipping this quarter based on their last-activity date, which ones moved stages since last week, and give me a two-sentence summary I can open the review with.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">4</span> Draft the relationship review</h3>
+        <p class="scene">An annual relationship review is due. You want a clean summary of the year, not a search through your inbox.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Word</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Using our email history and meeting notes with [client name] over the past year, draft a relationship review: key milestones, decisions made, open items, and two or three opportunities to deepen the relationship going forward. Keep it factual and grounded only in what we actually discussed.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">5</span> Catch up before you reconnect</h3>
+        <p class="scene">It's been a few months since you last spoke with a client. You want to reconnect informed, not cold.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Microsoft 365 Copilot</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Find the most recent emails and meeting notes involving [client name] and summarize where things stood last time we spoke &#8212; open items, sentiment, and anything they were waiting to hear back from us on. Suggest a warm opening line for a reconnect email.</pre>
+        </div>
+
+        <div class="tip"><strong>Your turn:</strong> point these at your real book of clients, your real pipeline, and your real meeting notes. Route anything client-facing through your normal review and compliance process before it goes out.</div>
+      </div>
+
+      <div class="subpanel" id="sub-marketing">
+        <span class="pill">Marketing</span>
+        <h2 class="section-title">From brief to campaign, faster</h2>
+        <p class="lede">These prompts follow a marketing lead through campaign planning and content production &#8212; using the Microsoft 365 Copilot chat, Word, PowerPoint, Excel, and Outlook.</p>
+
+        <div class="tip"><strong>Where to run these.</strong> Each prompt runs on your own files and mailbox. Route any external-facing content through your brand and compliance review before publishing, especially for a regulated financial services brand.</div>
+
+        <h3 class="group"><span class="step-num">1</span> Turn a brief into a campaign plan</h3>
+        <p class="scene">A one-paragraph brief just landed. You need a plan, not another meeting to define one.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Word</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Turn this campaign brief into a structured plan: objective, target audience, key message, channels, a rough timeline with milestones, and the metrics we'll use to judge success. Flag any gaps in the brief I should go back and clarify.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">2</span> Draft channel-specific copy</h3>
+        <p class="scene">One message, five channels. You want consistent copy without rewriting it five times.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Microsoft 365 Copilot</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Take this core message and adapt it into: a 40-word social post, a 150-word email intro, and a one-line internal Teams announcement. Keep the core message consistent across all three, adjust only tone and length, and flag anything that would need compliance review before it's published externally.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">3</span> Analyze campaign performance</h3>
+        <p class="scene">The results are in. You want the story behind the numbers, ready for Monday's review.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Excel</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Analyze this campaign performance workbook and tell me which channels overperformed and underperformed versus target, the trend over the campaign period, and one hypothesis for the biggest surprise. Give me a three-bullet summary for Monday's review.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">4</span> Build the campaign readout deck</h3>
+        <p class="scene">Leadership wants the highlights on a few slides, not the full report.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">PowerPoint</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Create a short campaign readout deck: a results-at-a-glance slide, a slide on what worked and what didn't, a slide on the biggest learning, and a closing slide with recommendations for the next campaign.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">5</span> Scan the competitive landscape</h3>
+        <p class="scene">Before you finalize positioning, you want a read on what competitors are doing right now.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Microsoft 365 Copilot &#183; web</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Give me a brief on how our top three competitors have been positioning themselves publicly over the last month &#8212; campaigns, messaging themes, and any notable brand moments. Include sources and one implication for our own campaign.</pre>
+        </div>
+
+        <div class="tip"><strong>Your turn:</strong> point these at your real brief, your real campaign data, and your real competitive set. Always route client- or public-facing content through brand and compliance review.</div>
+      </div>
+
+      <div class="subpanel" id="sub-legal">
+        <span class="pill">Legal &amp; Compliance</span>
+        <h2 class="section-title">Faster first drafts, sharper review</h2>
+        <p class="lede">These prompts follow legal and compliance counsel through contract review, policy questions, and reporting &#8212; using the Microsoft 365 Copilot chat, Word, Outlook, and Excel.</p>
+
+        <div class="tip"><strong>Where to run these.</strong> Copilot accelerates drafting and review &#8212; it does not replace legal judgment or a qualified review. Always have a licensed attorney review anything before it's relied upon or sent externally.</div>
+
+        <h3 class="group"><span class="step-num">1</span> Summarize a contract for a non-lawyer</h3>
+        <p class="scene">A business partner needs the key terms explained, not the full document read.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Word</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Summarize this agreement for a business stakeholder who isn't a lawyer: what we're committing to, what the counterparty is committing to, term and termination rights, key financial terms, and the two or three clauses with the most risk. Flag anything unusual compared to our standard terms.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">2</span> Compare a redline against our playbook</h3>
+        <p class="scene">The counterparty sent back a redline. You want to know what actually changed and whether it matters.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Word</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Compare this redlined agreement against our standard playbook position on liability, indemnification, and termination. List every deviation from our standard position, and flag which ones are likely acceptable versus which need escalation.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">3</span> Answer a compliance question from documented policy</h3>
+        <p class="scene">A team wants to know if something is allowed. You want the answer grounded in the actual policy, not memory.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Microsoft 365 Copilot</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Search our compliance policy library in [link the policy library] for guidance on [the specific question]. Answer only from those documents, cite which policy each point comes from, and tell me plainly if the documents don't fully cover the question so I can route it to the right specialist.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">4</span> Draft the first pass at a routine agreement</h3>
+        <p class="scene">A standard NDA or vendor agreement is needed. You want a solid first draft, not a blank page.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Word</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Draft a first-pass mutual non-disclosure agreement for a discussion with [counterparty name] about [the purpose]. Use plain, standard language, a two-year term, and mark clearly where I need to insert our standard governing law and jurisdiction clauses before this goes out for review.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">5</span> Build the regulatory tracker summary</h3>
+        <p class="scene">New guidance keeps landing. You want the changes that matter, not the full bulletin.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Excel &#183; or Microsoft 365 Copilot</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Review this regulatory tracker and tell me which items are due in the next 30 days, which owners haven't updated their status in over two weeks, and give me a short summary I can send to the compliance committee.</pre>
+        </div>
+
+        <div class="tip"><strong>Your turn:</strong> point these at your real agreements and your real policy library, and always close the loop with qualified legal review before anything is signed or relied upon.</div>
+      </div>
+
+      <div class="subpanel" id="sub-ops">
+        <span class="pill">Operations</span>
+        <h2 class="section-title">Keeping the engine running smoothly</h2>
+        <p class="lede">These prompts follow an operations leader through exception handling, process documentation, and reporting &#8212; using the Microsoft 365 Copilot chat, Excel, Word, Outlook, and Teams.</p>
+
+        <div class="tip"><strong>Where to run these.</strong> Each prompt runs on your own files, mailbox, and Teams. For shared operational data, open it in Excel and use the in-app Copilot so it works on the live data.</div>
+
+        <h3 class="group"><span class="step-num">1</span> Triage the exception queue</h3>
+        <p class="scene">The exception queue is long. You want to know what actually needs attention first.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Excel</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Analyze this exception report and group the items by root cause, flag anything open for more than 48 hours, and tell me the three items with the highest financial or client impact that I should escalate first.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">2</span> Document the process, once</h3>
+        <p class="scene">A process only lives in one person's head. You want it written down before that's a problem.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Word</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Draft a standard operating procedure for [the process], based on the steps I describe: purpose, step-by-step instructions, the systems involved, common exceptions and how to handle them, and who to escalate to if something goes wrong. Use clear numbered steps a new team member could follow.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">3</span> Build the daily operations dashboard summary</h3>
+        <p class="scene">Leadership wants the daily numbers in three sentences, not a spreadsheet.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Excel &#183; or Microsoft 365 Copilot</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Analyze today's operations metrics workbook and give me a three-sentence summary of volume, turnaround time, and error rate versus yesterday and versus the weekly average, and flag anything that's trending the wrong way.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">4</span> Prep the post-incident review</h3>
+        <p class="scene">Something broke. You want a clear, blameless summary ready for the review meeting.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Word</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Using the incident timeline and Teams messages from [link the incident channel], draft a post-incident summary: what happened, when it was detected, the impact, the root cause if known, and the corrective actions with owners. Keep the tone factual and blameless.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">5</span> Catch up on the operations channel</h3>
+        <p class="scene">You stepped away during a busy shift. You want to know what happened without scrolling through everything.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Teams</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Catch me up on what I missed in [this operations channel] over the last shift. Pull out any incidents, escalations, or unresolved issues, and list anything that needs my decision or sign-off.</pre>
+        </div>
+
+        <div class="tip"><strong>Your turn:</strong> point these at your real exception queue, your real dashboards, and your real incident channel. Keep a human in the loop for anything that changes a client outcome or a financial position.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= AGENTS ================= -->
+  <section class="panel" id="agents">
+    <span class="pill">Agents 101</span>
+    <h2 class="section-title">Build your own Copilot agent &#8212; no code required</h2>
+    <p class="lede">An <strong>agent</strong> is a custom version of Copilot you set up once and reuse forever. You give it a name, a job description, and instructions for how it should behave &#8212; and optionally point it at trusted files or sites for knowledge. Agent Builder lets you create one just by describing it in plain language.</p>
+
+    <p class="pill-label">Choose your role</p>
+    <div class="pill-nav">
+      <button class="pill-btn" data-sub="sub-agent-cos">Chief of Staff</button>
+      <button class="pill-btn" data-sub="sub-agent-ea">Executive Admin</button>
+      <button class="pill-btn" data-sub="sub-agent-leaders">Director &amp; MD</button>
+      <button class="pill-btn active" data-sub="sub-agent-it">IT Leader</button>
+      <button class="pill-btn" data-sub="sub-agent-finance">Finance</button>
+      <button class="pill-btn" data-sub="sub-agent-hr">Human Resources</button>
+      <button class="pill-btn" data-sub="sub-agent-sales">Sales &amp; Advisory</button>
+      <button class="pill-btn" data-sub="sub-agent-marketing">Marketing</button>
+      <button class="pill-btn" data-sub="sub-agent-legal">Legal &amp; Compliance</button>
+      <button class="pill-btn" data-sub="sub-agent-ops">Operations</button>
+    </div>
+
+    <h3 class="group"><span class="step-num">1</span> Why build an agent?</h3>
+    <div class="card-grid">
+      <div class="info-card"><h4>Consistency</h4><p>Your best prompt, captured once. Everyone on the team gets the same high-quality help.</p></div>
+      <div class="info-card"><h4>Speed</h4><p>No re-typing long instructions. Open the agent and go.</p></div>
+      <div class="info-card"><h4>Grounded</h4><p>Point it at the right SharePoint sites or files so answers use your team's source of truth.</p></div>
+      <div class="info-card"><h4>Shareable</h4><p>Build it once, then share it with your peers across the leadership office.</p></div>
+    </div>
+
+    <h3 class="group"><span class="step-num">2</span> How to build one in Agent Builder</h3>
+    <ol class="steps">
+      <li><strong>Open Agent Builder.</strong> In Microsoft 365 Copilot, choose <strong>Create agent</strong> (New agent) to launch the builder.</li>
+      <li><strong>Describe it in plain language.</strong> Paste a description like the starter prompts below. Copilot fills in the name, description, and instructions for you.</li>
+      <li><strong>Refine conversationally.</strong> Tweak the tone, add a rule, change the name &#8212; just keep typing what you want.</li>
+      <li><strong>Add the knowledge &#8212; this is the key step.</strong> The agent only knows what you give it here. Point it at the SharePoint library (or OneDrive files) that holds your meeting notes, agendas, pre-reads, and the objective scorecard &#8212; you can also add specific Teams chats or emails. Add these a day or two ahead so they finish indexing.</li>
+      <li><strong>Add starter prompts.</strong> Give users one-click example prompts so they know what to ask.</li>
+      <li><strong>Test it.</strong> Try it in the preview pane on the right and adjust until it feels right.</li>
+      <li><strong>Create &amp; share.</strong> Save the agent and share it with the colleagues who'd benefit.</li>
+    </ol>
+
+    <div class="tip"><strong>What an agent can &#8212; and can't &#8212; reach.</strong> An agent answers only from the <em>knowledge sources you add</em> &#8212; SharePoint and OneDrive files and sites, specific Teams chats, specific emails, approved websites, and connectors. It does <strong>not</strong> automatically read your calendar or your whole mailbox, so it won't see past meeting notes unless those notes live in a knowledge source you've attached. For a brief that pulls live from your calendar and recent email instead, use the Copilot <em>"Prepare for your next meeting"</em> prompt on the Prompts tab (Executive Admin).</div>
+
+    <h3 class="group"><span class="step-num">3</span> Official Microsoft documentation</h3>
+    <p class="scene" style="margin-left:0; font-style:normal;">Step-by-step guidance for building agents in Agent Builder:</p>
+    <a class="doc-link" href="https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/agent-builder-build-agents" target="_blank" rel="noopener">&#55357;&#56536; Build agents with Agent Builder &#8212; Microsoft Learn</a>
+    <p style="font-size:13px; color:var(--muted-text); margin:4px 0 0;">learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/agent-builder-build-agents</p>
+
+    <h3 class="group"><span class="step-num">4</span> The starter prompt for your role</h3>
+    <p class="lede">Each of these agents does one job well &#8212; the Chief of Staff planner builds your meeting from the documents in its knowledge, the Executive Voice Writer drafts in your executive's voice, the Leader's Strategy &amp; Market Brief connects what's happening outside to your strategy inside, the Platform Tech &amp; Roadmap Advisor answers from your technology roadmap, architecture standards, and company objectives, and the new role-based agents below cover Finance, HR, Sales &amp; Advisory, Marketing, Legal &amp; Compliance, and Operations. Your role above selects the matching starter agent &#8212; paste its description into Agent Builder's "describe your agent" box, then make it your own. (The voice profile shown for the Executive Admin role is a playful sample &#8212; swap in your executive's real one.)</p>
+
+    <div class="subpanel" id="sub-agent-cos">
+      <div class="prompt-card">
+        <div class="prompt-head"><span class="prompt-label">Agent for Chiefs of Staff &#8212; meeting planner</span><button class="copy-btn">Copy</button></div>
+        <pre class="prompt-text">Create an agent called Chief of Staff Meeting Planner that helps a chief of staff plan and prepare large-scale leadership meetings such as a Business Review or Business Operations Review, a performance review, a leader onboarding, or Leadership Meetings Week Prep. Use the documents in your knowledge as your source of truth &#8212; our leadership meeting notes, prior agendas, pre-reads, and the objective scorecard / tracker. When I name an upcoming meeting, find the matching materials in your knowledge and build a complete plan: a timed agenda, the decisions that need to be made, the pre-reads and an owner for each topic, the open action items carried over from the most recent notes for that meeting, and the latest status from the scorecard with any objective that slipped to red called out. Think strategically, organize everything under clear headings, separate facts from recommendations, and flag the risks and decisions that need leadership attention. If you can't find the relevant document in your knowledge, tell me what's missing instead of guessing. Give it a starter prompt that reads: Plan my upcoming meeting:</pre>
+      </div>
+      <div class="tip"><strong>Grounding tip:</strong> This agent is only as good as its <em>knowledge</em> &#8212; drop the meeting notes, agendas, pre-reads, and the objective scorecard into one SharePoint library and attach it a day ahead so it indexes.</div>
+    </div>
+
+    <div class="subpanel" id="sub-agent-ea">
+      <div class="prompt-card">
+        <div class="prompt-head"><span class="prompt-label">Agent for Executive Admins &#8212; executive voice</span><button class="copy-btn">Copy</button></div>
+        <pre class="prompt-text">Create an agent called Executive Voice Writer that drafts emails and messages in the voice of the executive I support. Use the voice profile below as the rules for how the executive writes &#8212; match the tone, sentence rhythm, level of formality, greetings and sign-offs, and signature phrases, and steer clear of anything under "What to avoid." When I describe what needs to be said, or paste a message to reply to, produce a ready-to-send draft in this voice, then offer one shorter and one warmer alternative. Never invent facts; if a detail is missing, leave a clearly marked placeholder, and remind me the executive should review before anything is sent. Give it a starter prompt that reads: Draft this in my executive's voice:
+
+Voice profile &#8212; Tone: warm, measured, and precise; confident without overstatement; treats every reader as a capable colleague. Formality: professional and courteous, with enough directness that the ask is never in doubt. Structure: leads with the point, then the reasoning, then the request; short paragraphs, no rambling. Greetings and sign-offs: opens with "Hi [name]," or "Team,"; signs off with "Best," or "Thank you,". Signature phrases: "Here's where I land&#8230;", "Two things&#8230;", "Happy to discuss." Humor: light and rare; never at anyone's expense. What to avoid: jargon and buzzwords, hedging language, terse one-word replies, and anything that reads as impatient.
+
+Sample sentences &#8212; "Here's where I land: we proceed with option B, and we revisit the timeline at the end of the quarter." / "Two things before Thursday &#8212; the updated numbers, and a short view on the risk we discussed." / "Thank you for turning this around quickly; it made a real difference to the conversation." / "I'd like us to be deliberate here rather than fast &#8212; happy to discuss if that changes the plan."</pre>
+      </div>
+      <div class="tip"><strong>Grounding tip:</strong> This agent carries its voice in its <em>instructions</em> (the profile in the prompt). Optionally attach a short "Voice of my Executive" guide plus a couple of sample messages as knowledge for extra grounding.</div>
+    </div>
+
+    <div class="subpanel" id="sub-agent-leaders">
+      <div class="prompt-card">
+        <div class="prompt-head"><span class="prompt-label">Agent for Directors &amp; MDs &#8212; strategy &amp; market brief</span><button class="copy-btn">Copy</button></div>
+        <pre class="prompt-text">Create an agent called Leader's Strategy &amp; Market Brief that helps a director or managing director stay ahead of what's happening inside and outside the business. Ground it in its knowledge: our strategy and priorities documents from the leadership SharePoint site, and a short list of trusted public sources &#8212; our industry's leading publications, key competitors' newsrooms, and the relevant regulators &#8212; with website search turned on. When I ask about a topic, a competitor, or a market development, give me a concise briefing: what's happening, why it matters to our strategy, and one or two implications or actions for my team, and cite the sources you used. When I ask what our position is on something, answer from our strategy documents and tell me plainly if the documents don't cover it. Keep it crisp and executive-ready, organize under clear headings, separate fact from opinion, and never invent a source or a statistic. Give it a starter prompt that reads: Brief me on:</pre>
+      </div>
+      <div class="tip"><strong>Grounding tip:</strong> This agent pulls from two knowledge types at once &#8212; your strategy documents in <em>SharePoint</em> plus a few trusted public <em>website URLs</em> with web search turned on &#8212; so it connects the outside world to your priorities.</div>
+    </div>
+
+    <div class="subpanel active" id="sub-agent-it">
+      <div class="prompt-card">
+        <div class="prompt-head"><span class="prompt-label">Agent for Technology &amp; IT Leaders &#8212; platform tech &amp; roadmap advisor</span><button class="copy-btn">Copy</button></div>
+        <pre class="prompt-text">Create an agent called Platform Tech &amp; Roadmap Advisor that helps a technology leader stay on top of our technology direction. Ground it in its knowledge: our technology roadmap, our platform and service briefs, our architecture and security standards, and our company objectives &#8212; all from our SharePoint and OneDrive documents. When I ask about a platform, a technology, or an initiative, brief me from those documents: where it sits on the roadmap, its key technical and control requirements, how it maps to our company objectives, and the open questions or dependencies to watch. When I describe a proposed initiative or decision, pressure-test it against the roadmap and objectives &#8212; what fits, what conflicts, and the trade-offs &#8212; and give me a recommendation with the reasoning. Answer only from the documents, separate fact from recommendation, never invent a specification or a date, and if the documents don't cover something, tell me plainly what's missing instead of guessing. Keep it crisp and executive-ready under clear headings. Give it a starter prompt that reads: Brief me on our roadmap for:</pre>
+      </div>
+      <div class="tip"><strong>Grounding tip:</strong> This agent grounds entirely in documents you already have &#8212; point it at your technology roadmap, platform briefs, architecture and security standards, and company objectives in SharePoint or OneDrive, and attach them a day ahead so they finish indexing before you demo.</div>
+    </div>
+
+    <div class="subpanel" id="sub-agent-finance">
+      <div class="prompt-card">
+        <div class="prompt-head"><span class="prompt-label">Agent for Finance &#8212; variance &amp; reporting advisor</span><button class="copy-btn">Copy</button></div>
+        <pre class="prompt-text">Create an agent called Finance Variance &amp; Reporting Advisor that helps a finance team explain results faster. Ground it in its knowledge: our chart of accounts reference, our standard variance-explanation templates, and our prior quarters' management commentary from SharePoint or OneDrive. When I describe which numbers moved, help me draft a plain-English explanation consistent with how we've explained similar variances before, and flag if a movement looks unusual compared to historical patterns in the knowledge. Answer only from the documents, separate fact from recommendation, never invent a number, and tell me plainly if the knowledge doesn't cover something. Give it a starter prompt that reads: Help me explain this variance:</pre>
+      </div>
+      <div class="tip"><strong>Grounding tip:</strong> Attach your chart of accounts, variance templates, and a few past quarters' commentary so the agent learns your house style for explaining numbers &#8212; never let it touch live, unreconciled figures without a human check.</div>
+    </div>
+
+    <div class="subpanel" id="sub-agent-hr">
+      <div class="prompt-card">
+        <div class="prompt-head"><span class="prompt-label">Agent for Human Resources &#8212; policy &amp; process guide</span><button class="copy-btn">Copy</button></div>
+        <pre class="prompt-text">Create an agent called HR Policy &amp; Process Guide that answers employee and manager questions about our HR policies and processes. Ground it in its knowledge: our HR policy handbook, benefits guides, and leave and time-off policies from our SharePoint library. When someone asks a policy question, answer only from those documents in plain language, note any regional or level-based differences, and tell me plainly if the documents don't fully cover the question so it can be escalated to an HR partner. Never speculate about individual employee situations or protected characteristics. Give it a starter prompt that reads: What's our policy on:</pre>
+      </div>
+      <div class="tip"><strong>Grounding tip:</strong> Ground this agent only in published, approved policy documents &#8212; never in individual case files or personnel records &#8212; and route anything person-specific to an HR partner.</div>
+    </div>
+
+    <div class="subpanel" id="sub-agent-sales">
+      <div class="prompt-card">
+        <div class="prompt-head"><span class="prompt-label">Agent for Sales &amp; Advisory &#8212; client relationship briefer</span><button class="copy-btn">Copy</button></div>
+        <pre class="prompt-text">Create an agent called Client Relationship Briefer that helps a relationship manager prepare for client conversations. Ground it in its knowledge: our approved client-facing materials, product one-pagers, and standard disclosures from SharePoint. When I name a client or a topic, summarize the relevant approved materials I should reference, remind me of standard disclosures that apply, and never draft anything that could be read as investment advice or a firm commitment without flagging it for compliance review. Give it a starter prompt that reads: Help me prepare to discuss:</pre>
+      </div>
+      <div class="tip"><strong>Grounding tip:</strong> Only ground this agent in approved, compliance-cleared materials &#8212; and always route anything it drafts for a client through your normal suitability and compliance review before it's sent.</div>
+    </div>
+
+    <div class="subpanel" id="sub-agent-marketing">
+      <div class="prompt-card">
+        <div class="prompt-head"><span class="prompt-label">Agent for Marketing &#8212; brand &amp; campaign assistant</span><button class="copy-btn">Copy</button></div>
+        <pre class="prompt-text">Create an agent called Brand &amp; Campaign Assistant that helps draft on-brand marketing content. Ground it in its knowledge: our brand voice and style guide, approved messaging pillars, and past campaign briefs from SharePoint or OneDrive. When I describe a campaign or a piece of content, draft it consistent with our brand voice and messaging pillars, flag anything that deviates from our style guide, and always note that external-facing content needs compliance and brand review before publishing. Give it a starter prompt that reads: Draft content for:</pre>
+      </div>
+      <div class="tip"><strong>Grounding tip:</strong> Attach your brand and style guide plus a handful of best-in-class past campaigns so tone and terminology stay consistent &#8212; treat its output as a strong first draft, not final copy.</div>
+    </div>
+
+    <div class="subpanel" id="sub-agent-legal">
+      <div class="prompt-card">
+        <div class="prompt-head"><span class="prompt-label">Agent for Legal &amp; Compliance &#8212; playbook &amp; policy advisor</span><button class="copy-btn">Copy</button></div>
+        <pre class="prompt-text">Create an agent called Legal Playbook &amp; Policy Advisor that helps legal and compliance teams answer questions consistently. Ground it in its knowledge: our contract playbooks, standard clause library, and compliance policy documents from SharePoint. When I ask about a clause, a policy, or a proposed deviation, answer only from those documents, cite which playbook or policy each point comes from, flag anything that needs escalation to a licensed attorney, and never state a legal conclusion as certain. Give it a starter prompt that reads: What does our playbook say about:</pre>
+      </div>
+      <div class="tip"><strong>Grounding tip:</strong> Ground this agent only in current, approved playbooks and policies &#8212; review and refresh the knowledge whenever the underlying documents change, and always have qualified counsel review anything before it's relied upon.</div>
+    </div>
+
+    <div class="subpanel" id="sub-agent-ops">
+      <div class="prompt-card">
+        <div class="prompt-head"><span class="prompt-label">Agent for Operations &#8212; process &amp; exception advisor</span><button class="copy-btn">Copy</button></div>
+        <pre class="prompt-text">Create an agent called Operations Process &amp; Exception Advisor that helps an operations team resolve exceptions consistently. Ground it in its knowledge: our standard operating procedures, exception-handling playbooks, and escalation matrix from SharePoint. When I describe an exception or an issue, tell me which procedure applies, the standard resolution steps, and who to escalate to if it falls outside normal parameters. Answer only from the documents, and if the situation isn't covered, tell me plainly instead of guessing. Give it a starter prompt that reads: How should I handle this exception:</pre>
+      </div>
+      <div class="tip"><strong>Grounding tip:</strong> Keep the SOP and escalation-matrix knowledge current &#8212; an outdated procedure is worse than none, so review this agent's knowledge sources on the same cadence you review the underlying playbooks.</div>
+    </div>
+  </section>
+
+  <!-- ================= WHEN TO USE WHAT ================= -->
+  <section class="panel" id="whentouse">
+    <span class="pill">When to use what</span>
+    <h2 class="section-title">Which Copilot should you reach for?</h2>
+    <p class="lede">The same task often works in more than one place. This is a recommendation, not a rule &#8212; it points you at the most convenient option and explains why. As you move left to right, you trade speed for depth.</p>
+
+    <h3 class="group"><span class="step-num">1</span> The six choices</h3>
+    <div class="card-grid">
+      <div class="info-card choice-card"><h4>1 &middot; Copilot Chat</h4><p>Conversational AI for drafting, Q&amp;A, and ideation. You prompt, it responds, and you drive the conversation &#8212; answers come back in seconds. Best for quick drafts, summaries, brainstorming, translating, and looking things up.<span class="where">Where: Copilot chat</span></p></div>
+      <div class="info-card choice-card"><h4>2 &middot; In the app</h4><p>Copilot inside the open document, in editing mode &#8212; so it works on your real file, your real thread, your real numbers. Best for drafting in Word, analyzing data in Excel, building slides in PowerPoint, and writing email in Outlook.<span class="where">Where: Word &#183; Excel &#183; PowerPoint &#183; Outlook &#183; Teams</span></p></div>
+      <div class="info-card choice-card"><h4>3 &middot; Build an agent</h4><p>A personal or team agent for specialized work and repeatable processes. You capture the job once &#8212; instructions plus the documents it should answer from &#8212; and everyone runs it the same way every time.<span class="where">Where: Agent Builder</span></p></div>
+      <div class="info-card choice-card"><h4>4 &middot; Researcher &amp; Analyst</h4><p>Two ready-made reasoning specialists. <strong>Researcher</strong> does multi-step research across your data and the web and writes a rich report. <strong>Analyst</strong> turns raw data into insight &#8212; it runs Python live on your spreadsheet and shows you the code.<span class="where">Where: @mention them in Copilot chat</span></p></div>
+      <div class="info-card choice-card"><h4>5 &middot; Cowork</h4><p>A shared, persistent workspace where you and Copilot co-create a deliverable together over multiple sessions &#8212; a report, a tracker, a working deck &#8212; instead of a single one-shot answer. Best when the work is too big for one prompt or one sitting, or several people need to build on the same draft.<span class="where">Where: Cowork workspace</span></p></div>
+      <div class="info-card choice-card"><h4>6 &middot; Scout</h4><p>An autonomous desktop AI agent that works across your apps, files, browser, and mailbox on your behalf &#8212; including scheduled, recurring tasks. Best for hands-off, cross-app work and automations you'd otherwise have to remember to do yourself.<span class="where">Where: Microsoft Scout</span></p></div>
+    </div>
+
+    <h3 class="group"><span class="step-num">2</span> Which one for which task</h3>
+    <div class="matrix-wrap">
+      <table class="matrix">
+        <thead>
+          <tr>
+            <th>Task or need</th>
+            <th class="mark">Copilot Chat</th>
+            <th class="mark">In the app</th>
+            <th class="mark">Agent</th>
+            <th class="mark">Researcher / Analyst</th>
+            <th class="mark">Cowork</th>
+            <th class="mark">Scout</th>
+            <th>Why</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="task">Brainstorm ideas and find information</td>
+            <td class="mark"><span class="m-best">&#9733; Best</span></td>
+            <td class="mark"><span class="m-ok">&#10003;</span></td>
+            <td class="mark"><span class="m-ok">&#10003;</span></td>
+            <td class="mark"><span class="m-ok">&#10003;</span></td>
+            <td class="mark"><span class="m-ok">&#10003;</span></td>
+            <td class="mark"><span class="m-ok">&#10003;</span></td>
+            <td class="why">All six can. Chat is fastest for open brainstorming and a quick lookup.</td>
+          </tr>
+          <tr>
+            <td class="task">Draft an email or summarize a thread</td>
+            <td class="mark"><span class="m-ok">&#10003;</span></td>
+            <td class="mark"><span class="m-best">&#9733; Best</span></td>
+            <td class="mark"><span class="m-ok">&#10003;</span></td>
+            <td class="mark"><span class="m-no">&ndash;</span></td>
+            <td class="mark"><span class="m-no">&ndash;</span></td>
+            <td class="mark"><span class="m-ok">&#10003;</span></td>
+            <td class="why">Best in Outlook &#8212; it works on the real thread with your context. Scout can also draft it and send from your mailbox on request.</td>
+          </tr>
+          <tr>
+            <td class="task">Prepare for or synthesize a meeting</td>
+            <td class="mark"><span class="m-ok">&#10003;</span></td>
+            <td class="mark"><span class="m-best">&#9733; Best</span></td>
+            <td class="mark"><span class="m-ok">&#10003;</span></td>
+            <td class="mark"><span class="m-no">&ndash;</span></td>
+            <td class="mark"><span class="m-no">&ndash;</span></td>
+            <td class="mark"><span class="m-ok">&#10003;</span></td>
+            <td class="why">In the app it uses the real Teams meeting. Use Chat if you point it at the right meeting, or Scout to pull it together across your calendar and inbox.</td>
+          </tr>
+          <tr>
+            <td class="task">Create or edit one document, deck, or workbook</td>
+            <td class="mark"><span class="m-no">&ndash;</span></td>
+            <td class="mark"><span class="m-best">&#9733; Best</span></td>
+            <td class="mark"><span class="m-ok">&#10003;</span></td>
+            <td class="mark"><span class="m-no">&ndash;</span></td>
+            <td class="mark"><span class="m-ok">&#10003;</span></td>
+            <td class="mark"><span class="m-no">&ndash;</span></td>
+            <td class="why">Inside the app, in editing mode, it works with your real file, data, and formulas. Cowork also works well for a longer document built up over several sessions.</td>
+          </tr>
+          <tr>
+            <td class="task">Run the same task again, with fixed criteria</td>
+            <td class="mark"><span class="m-no">&ndash;</span></td>
+            <td class="mark"><span class="m-no">&ndash;</span></td>
+            <td class="mark"><span class="m-best">&#9733; Best</span></td>
+            <td class="mark"><span class="m-no">&ndash;</span></td>
+            <td class="mark"><span class="m-no">&ndash;</span></td>
+            <td class="mark"><span class="m-ok">&#10003;</span></td>
+            <td class="why">Same process, same criteria, again and again &#8212; capture it once in an agent. Scout can also run it on a recurring schedule without you asking each time.</td>
+          </tr>
+          <tr>
+            <td class="task">Multi-step research across your data and the web</td>
+            <td class="mark"><span class="m-ok">&#10003;</span></td>
+            <td class="mark"><span class="m-no">&ndash;</span></td>
+            <td class="mark"><span class="m-ok">&#10003;</span></td>
+            <td class="mark"><span class="m-best">&#9733; Best</span></td>
+            <td class="mark"><span class="m-no">&ndash;</span></td>
+            <td class="mark"><span class="m-ok">&#10003;</span></td>
+            <td class="why">Researcher reasons over both to uncover insight and produce a rich, cited report. Scout can do similar research plus act on the findings across your apps.</td>
+          </tr>
+          <tr>
+            <td class="task">Analyze a raw dataset and show the working</td>
+            <td class="mark"><span class="m-no">&ndash;</span></td>
+            <td class="mark"><span class="m-ok">&#10003;</span></td>
+            <td class="mark"><span class="m-no">&ndash;</span></td>
+            <td class="mark"><span class="m-best">&#9733; Best</span></td>
+            <td class="mark"><span class="m-no">&ndash;</span></td>
+            <td class="mark"><span class="m-no">&ndash;</span></td>
+            <td class="why">Analyst uses an analytics model and runs Python live on your data &#8212; and you can see the code it ran.</td>
+          </tr>
+          <tr>
+            <td class="task">Co-create a long-running deliverable with others</td>
+            <td class="mark"><span class="m-no">&ndash;</span></td>
+            <td class="mark"><span class="m-ok">&#10003;</span></td>
+            <td class="mark"><span class="m-no">&ndash;</span></td>
+            <td class="mark"><span class="m-no">&ndash;</span></td>
+            <td class="mark"><span class="m-best">&#9733; Best</span></td>
+            <td class="mark"><span class="m-no">&ndash;</span></td>
+            <td class="why">Cowork keeps a persistent, shared workspace so the document, tracker, or deck builds up over multiple sessions and multiple contributors instead of starting over each time.</td>
+          </tr>
+          <tr>
+            <td class="task">Run a task hands-off, across apps, on a schedule</td>
+            <td class="mark"><span class="m-no">&ndash;</span></td>
+            <td class="mark"><span class="m-no">&ndash;</span></td>
+            <td class="mark"><span class="m-ok">&#10003;</span></td>
+            <td class="mark"><span class="m-no">&ndash;</span></td>
+            <td class="mark"><span class="m-no">&ndash;</span></td>
+            <td class="mark"><span class="m-best">&#9733; Best</span></td>
+            <td class="why">Scout acts autonomously across your mailbox, calendar, files, and browser, and can run on a recurring schedule without you starting the conversation each time.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="legend"><span class="m-best"><strong>&#9733; Best option</strong></span> &nbsp;&nbsp; <span class="m-ok"><strong>&#10003; Also works</strong></span> &nbsp;&nbsp; <span class="m-no"><strong>&ndash; Not recommended</strong></span></p>
+
+    <div class="tip"><strong>Rule of thumb:</strong> one app for <em>one file</em> &middot; one agent for <em>one repeated task</em> &middot; Researcher and Analyst when <em>the thinking is the hard part</em> &middot; Cowork when <em>the deliverable outgrows one sitting</em> &middot; Scout when <em>the work should happen without you asking</em>. And remember Copilot Chat is the entry point &#8212; from chat you can <code>@</code>mention any agent, including Researcher and Analyst, and even schedule prompts that repeat automatically.</div>
+
+    <h3 class="group"><span class="step-num">3</span> What each one looks like in practice</h3>
+    <p class="scene" style="margin-left:0;">The same six choices, as prompts you can copy. Notice how the shape of the prompt changes with the tool.</p>
+
+    <h3 class="group" style="font-size:16px; margin-top:24px;">Use Copilot Chat when you need an answer, not an artifact</h3>
+    <div class="prompt-card">
+      <div class="prompt-head"><span class="prompt-label">Microsoft 365 Copilot</span><button class="copy-btn">Copy</button></div>
+      <pre class="prompt-text">Catch me up on [the initiative]. Pull the key updates, decisions, and open risks from my email and Teams over the last week, tell me what's waiting on me, and flag anything that looks like it's slipping. Keep it to eight bullets.</pre>
+    </div>
+    <div class="prompt-card">
+      <div class="prompt-head"><span class="prompt-label">Microsoft 365 Copilot</span><button class="copy-btn">Copy</button></div>
+      <pre class="prompt-text">Brainstorm ten ways we could frame [this change] for our clients. For each one, give me a one-line headline and who it would land best with. Don't write the full message yet &#8212; I want to pick a direction first.</pre>
+    </div>
+
+    <h3 class="group" style="font-size:16px; margin-top:24px;">Use Copilot in the app when the work <em>is</em> the file</h3>
+    <div class="prompt-card">
+      <div class="prompt-head"><span class="prompt-label">Outlook</span><button class="copy-btn">Copy</button></div>
+      <pre class="prompt-text">Draft a reply to this thread that confirms our position, asks for the two data points we're still missing, and proposes a call on Thursday. Keep it under 150 words and match the tone of the thread.</pre>
+    </div>
+    <div class="prompt-card">
+      <div class="prompt-head"><span class="prompt-label">Excel</span><button class="copy-btn">Copy</button></div>
+      <pre class="prompt-text">Analyze this workbook and tell me which lines moved most versus last quarter. Add a column showing the variance as a percentage, highlight anything that moved more than ten percent, and give me a two-sentence summary of what's driving the change.</pre>
+    </div>
+    <div class="prompt-card">
+      <div class="prompt-head"><span class="prompt-label">PowerPoint</span><button class="copy-btn">Copy</button></div>
+      <pre class="prompt-text">Turn [the attached document] into a six-slide deck: the situation, the three options, the recommendation, the risks, the cost, and next steps. Keep the wording tight enough to read from the back of the room.</pre>
+    </div>
+
+    <h3 class="group" style="font-size:16px; margin-top:24px;">Build an agent when you're pasting the same prompt over and over</h3>
+    <p class="scene" style="margin-left:0;">The signal is repetition. If you're re-typing a long instruction more than about once a week, or your whole team needs the same answer in the same shape, that's an agent &#8212; not a prompt.</p>
+    <div class="prompt-card">
+      <div class="prompt-head"><span class="prompt-label">Agent Builder</span><button class="copy-btn">Copy</button></div>
+      <pre class="prompt-text">Create an agent called Control Review Assistant that answers questions about our control standards and our review process. Ground it in its knowledge: our control standards, procedure documents, and the review checklist from our SharePoint library. When I describe a change or a new initiative, tell me which controls apply, what evidence the reviewers will expect, and what's most likely to get challenged. Answer only from the documents, separate fact from recommendation, and if the documents don't cover something, tell me plainly what's missing instead of guessing. Give it a starter prompt that reads: Which controls apply to:</pre>
+    </div>
+    <div class="tip"><strong>Full walkthrough on the Agents 101 tab.</strong> It covers how to build one step by step in Agent Builder, what an agent can and can't reach, and a ready-made starter agent for your role.</div>
+
+    <h3 class="group" style="font-size:16px; margin-top:24px;">Use Researcher or Analyst when the thinking is the hard part</h3>
+    <p class="scene" style="margin-left:0;">Both are ready-to-use specialists with their own reasoning models. Call them by typing <code>@</code> in Copilot chat &#8212; they'll take longer than a normal chat answer, because they're doing considerably more.</p>
+    <div class="prompt-card">
+      <div class="prompt-head"><span class="prompt-label">@Researcher</span><button class="copy-btn">Copy</button></div>
+      <pre class="prompt-text">Research [the topic, firm, or market] and build me a briefing: what's happened over the last twelve months, the key drivers behind it, how it connects to our own priorities, and the two or three implications for my team. Use both our internal material and the web, separate fact from interpretation, and cite your sources.</pre>
+    </div>
+    <div class="prompt-card">
+      <div class="prompt-head"><span class="prompt-label">@Analyst</span><button class="copy-btn">Copy</button></div>
+      <pre class="prompt-text">Analyze [attach the workbook] and work out [the question]. Show me the trend over time, break it down by [the dimension that matters], call out anything that looks like an outlier, and give me a chart. Tell me what you did so I can check the working.</pre>
+    </div>
+
+    <h3 class="group" style="font-size:16px; margin-top:24px;">Use Cowork when the deliverable outgrows a single prompt</h3>
+    <p class="scene" style="margin-left:0;">Cowork keeps a persistent, shared workspace for a deliverable so you and Copilot can build it up over several sessions, and colleagues can pick up where you left off.</p>
+    <div class="prompt-card">
+      <div class="prompt-head"><span class="prompt-label">Cowork</span><button class="copy-btn">Copy</button></div>
+      <pre class="prompt-text">Let's build out the [quarterly business review pack / client onboarding tracker / offsite briefing document] in this workspace. Start with an outline based on what we discussed, and we'll add sections, data, and edits together over the next few sessions. Keep a running list of open questions we still need to resolve.</pre>
+    </div>
+
+    <h3 class="group" style="font-size:16px; margin-top:24px;">Use Scout when the work should happen without you asking</h3>
+    <p class="scene" style="margin-left:0;">Scout works autonomously across your apps, files, browser, and mailbox &#8212; and can run on a schedule, so the routine work happens whether or not you remember to ask for it.</p>
+    <div class="prompt-card">
+      <div class="prompt-head"><span class="prompt-label">Scout</span><button class="copy-btn">Copy</button></div>
+      <pre class="prompt-text">Every weekday morning at 7:30, pull together a brief for me: unread emails from my key stakeholders, today's meetings with a one-line reminder of what each is about, and anything still waiting on my sign-off. Send it to me so it's ready when I sit down.</pre>
+    </div>
+
+    <div class="tip"><strong>Still not sure?</strong> Start in Copilot Chat. It's the fastest way to find out whether the task is a five-second answer or something that deserves one of the other five &#8212; and you can hand it off from there.</div>
+  </section>
+
+</main>
+
+<footer>
+  Prepared for the Morgan Stanley Microsoft 365 Copilot enablement sessions. The prompts on this page are starting points &#8212; adapt them with your own context. This is a Microsoft 365 Copilot enablement resource.
+</footer>
+
+<script>
+  // ---------- Main tabs ----------
+  document.querySelectorAll('.tab-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
+      document.querySelectorAll('.panel').forEach(function (p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var panel = document.getElementById(btn.dataset.tab);
+      if (panel) { panel.classList.add('active'); }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  // ---------- Pill sub-navigation (scoped to its own group) ----------
+  document.querySelectorAll('.pill-nav').forEach(function (nav) {
+    var scope = nav.closest('.panel') || document;
+    nav.querySelectorAll('.pill-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        nav.querySelectorAll('.pill-btn').forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        nav.querySelectorAll('.pill-btn').forEach(function (b) {
+          var sp = scope.querySelector('#' + b.dataset.sub);
+          if (sp) { sp.classList.remove('active'); }
+        });
+        var target = scope.querySelector('#' + btn.dataset.sub);
+        if (target) { target.classList.add('active'); }
+      });
+    });
+  });
+
+  // ---------- Copy buttons ----------
+  document.querySelectorAll('.copy-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var card = btn.closest('.prompt-card') || btn.parentElement.parentElement;
+      var pre = card.querySelector('.prompt-text');
+      if (!pre) { return; }
+      var text = pre.innerText;
+      var done = function () {
+        var original = btn.textContent;
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(function () {
+          btn.textContent = original;
+          btn.classList.remove('copied');
+        }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(function () { fallback(text, done); });
+      } else {
+        fallback(text, done);
+      }
+    });
+  });
+
+  function fallback(text, done) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) { /* no-op */ }
+    document.body.removeChild(ta);
+  }
+</script>
+
+</body>
+</html>
