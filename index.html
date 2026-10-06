@@ -459,6 +459,7 @@
         <button class="pill-btn" data-sub="sub-marketing">Marketing</button>
         <button class="pill-btn" data-sub="sub-legal">Legal &amp; Compliance</button>
         <button class="pill-btn" data-sub="sub-ops">Operations</button>
+        <button class="pill-btn" data-sub="sub-cowork">Cowork Prompts</button>
       </div>
 
       <div class="subpanel" id="sub-cos">
@@ -987,6 +988,51 @@
 
         <div class="tip"><strong>Your turn:</strong> point these at your real exception queue, your real dashboards, and your real incident channel. Keep a human in the loop for anything that changes a client outcome or a financial position.</div>
       </div>
+
+      <div class="subpanel" id="sub-cowork">
+        <span class="pill">Cowork Prompts</span>
+        <h2 class="section-title">Longer-running, multi-session deliverables built with Cowork</h2>
+        <p class="lede">Cowork keeps a persistent, shared workspace where you and Copilot build a deliverable up over several sessions instead of in a single exchange &#8212; so these prompts are deliberately bigger and more structured than a one-shot chat prompt. Use them as a starting brief, then keep working the draft across sessions and bring in colleagues as needed.</p>
+
+        <div class="tip"><strong>Where to run these.</strong> Start a new Cowork workspace, paste the prompt as your opening brief, and treat the first response as an outline to refine rather than a finished deliverable. Attach source documents directly to the workspace so every session has the same grounding.</div>
+
+        <h3 class="group"><span class="step-num">1</span> Build the quarterly business review pack</h3>
+        <p class="scene">The QBR deck touches every team's numbers and narrative. You want one workspace that pulls it together over several working sessions, not a deck you rebuild from scratch each quarter.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Cowork</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Let's build this quarter's business review pack together in this workspace. Start with a proposed structure: executive summary, performance against our top priorities, financial highlights and variances, key risks and mitigations, and the decisions we need from leadership. Pull a first draft of each section from the documents and data I attach, mark clearly where a number or claim still needs my confirmation, and keep a running "open questions" list at the top of the workspace so we both know what's still outstanding. We'll work through it section by section over the next few sessions &#8212; don't try to finalize anything on the first pass.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">2</span> Develop the board-level strategy narrative</h3>
+        <p class="scene">A strategy document for the board needs to hold up under scrutiny and evolve as the thinking sharpens. You want a living draft, not a single-shot memo.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Cowork</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Help me develop a board-level strategy narrative in this workspace over the next several sessions. Begin with an outline covering: the market context and why now, our strategic choices and the trade-offs behind them, the investment case, execution risks, and the milestones we'll report against. Use our prior strategy documents and board materials as the foundation, flag any section where our story has shifted since the last version, and keep a version history of major changes at the bottom of the workspace so I can see how the narrative evolved. Push back where the logic has gaps rather than smoothing over them.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">3</span> Run a structured due diligence workspace</h3>
+        <p class="scene">A due diligence effort spans weeks, multiple workstreams, and several contributors. You want one place that tracks findings as they come in rather than a patchwork of emails and documents.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Cowork</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Set up a due diligence workspace for [the target or deal] covering these workstreams: financial, legal, operational, and technology. For each workstream, create a section with the key questions we need answered, the documents reviewed so far, findings to date, and a red/amber/green risk rating with reasoning. As I upload new documents or notes across sessions, update the relevant section and flag anything that contradicts an earlier finding. Keep a consolidated summary of the top five risks at the top of the workspace, updated after every session.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">4</span> Co-author the client onboarding playbook</h3>
+        <p class="scene">Onboarding a major new client touches several teams over several weeks. You want a shared playbook that gets more complete every time someone works on it, not a document one person owns alone.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Cowork</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Let's co-author a client onboarding playbook for [client name] in this workspace, designed for several of us to contribute to over time. Structure it as: relationship background and key contacts, service scope and commitments, the 30-60-90 day onboarding milestones, risks and dependencies, and an escalation path. Start from our standard onboarding template and the account materials I'll share, and as different team members add their sections, keep the whole document consistent in tone and flag any places where two contributors' sections conflict or overlap.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">5</span> Build the annual operating plan</h3>
+        <p class="scene">The annual plan pulls together priorities, budget, and headcount across every team you own. It takes weeks to get right, and it keeps changing as numbers come in.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Cowork</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Build out our annual operating plan in this workspace across the next several sessions. Start with a skeleton covering: strategic priorities for the year, team-by-team objectives and key results, budget and headcount asks with justification, and the biggest risks to the plan. As I bring in inputs from each team over time, integrate them into the master document, reconcile any priorities that conflict across teams, and keep a change log so I can see what shifted between drafts. At the end of each session, summarize what's still open before we close out.</pre>
+        </div>
+
+        <div class="tip"><strong>Your turn:</strong> these prompts are intentionally larger in scope than a single-answer chat prompt &#8212; that's the point. Treat the first output as a working draft, keep the workspace open across sessions, and bring in colleagues to edit alongside you rather than starting a new conversation each time.</div>
+      </div>
     </div>
   </section>
 
@@ -1130,14 +1176,13 @@ Sample sentences &#8212; "Here's where I land: we proceed with option B, and we 
     <h2 class="section-title">Which Copilot should you reach for?</h2>
     <p class="lede">The same task often works in more than one place. This is a recommendation, not a rule &#8212; it points you at the most convenient option and explains why. As you move left to right, you trade speed for depth.</p>
 
-    <h3 class="group"><span class="step-num">1</span> The six choices</h3>
+    <h3 class="group"><span class="step-num">1</span> The five choices</h3>
     <div class="card-grid">
       <div class="info-card choice-card"><h4>1 &middot; Copilot Chat</h4><p>Conversational AI for drafting, Q&amp;A, and ideation. You prompt, it responds, and you drive the conversation &#8212; answers come back in seconds. Best for quick drafts, summaries, brainstorming, translating, and looking things up.<span class="where">Where: Copilot chat</span></p></div>
       <div class="info-card choice-card"><h4>2 &middot; In the app</h4><p>Copilot inside the open document, in editing mode &#8212; so it works on your real file, your real thread, your real numbers. Best for drafting in Word, analyzing data in Excel, building slides in PowerPoint, and writing email in Outlook.<span class="where">Where: Word &#183; Excel &#183; PowerPoint &#183; Outlook &#183; Teams</span></p></div>
       <div class="info-card choice-card"><h4>3 &middot; Build an agent</h4><p>A personal or team agent for specialized work and repeatable processes. You capture the job once &#8212; instructions plus the documents it should answer from &#8212; and everyone runs it the same way every time.<span class="where">Where: Agent Builder</span></p></div>
       <div class="info-card choice-card"><h4>4 &middot; Researcher &amp; Analyst</h4><p>Two ready-made reasoning specialists. <strong>Researcher</strong> does multi-step research across your data and the web and writes a rich report. <strong>Analyst</strong> turns raw data into insight &#8212; it runs Python live on your spreadsheet and shows you the code.<span class="where">Where: @mention them in Copilot chat</span></p></div>
       <div class="info-card choice-card"><h4>5 &middot; Cowork</h4><p>A shared, persistent workspace where you and Copilot co-create a deliverable together over multiple sessions &#8212; a report, a tracker, a working deck &#8212; instead of a single one-shot answer. Best when the work is too big for one prompt or one sitting, or several people need to build on the same draft.<span class="where">Where: Cowork workspace</span></p></div>
-      <div class="info-card choice-card"><h4>6 &middot; Scout</h4><p>An autonomous desktop AI agent that works across your apps, files, browser, and mailbox on your behalf &#8212; including scheduled, recurring tasks. Best for hands-off, cross-app work and automations you'd otherwise have to remember to do yourself.<span class="where">Where: Microsoft Scout</span></p></div>
     </div>
 
     <h3 class="group"><span class="step-num">2</span> Which one for which task</h3>
@@ -1151,7 +1196,6 @@ Sample sentences &#8212; "Here's where I land: we proceed with option B, and we 
             <th class="mark">Agent</th>
             <th class="mark">Researcher / Analyst</th>
             <th class="mark">Cowork</th>
-            <th class="mark">Scout</th>
             <th>Why</th>
           </tr>
         </thead>
@@ -1163,8 +1207,7 @@ Sample sentences &#8212; "Here's where I land: we proceed with option B, and we 
             <td class="mark"><span class="m-ok">&#10003;</span></td>
             <td class="mark"><span class="m-ok">&#10003;</span></td>
             <td class="mark"><span class="m-ok">&#10003;</span></td>
-            <td class="mark"><span class="m-ok">&#10003;</span></td>
-            <td class="why">All six can. Chat is fastest for open brainstorming and a quick lookup.</td>
+            <td class="why">All five can. Chat is fastest for open brainstorming and a quick lookup.</td>
           </tr>
           <tr>
             <td class="task">Draft an email or summarize a thread</td>
@@ -1173,8 +1216,7 @@ Sample sentences &#8212; "Here's where I land: we proceed with option B, and we 
             <td class="mark"><span class="m-ok">&#10003;</span></td>
             <td class="mark"><span class="m-no">&ndash;</span></td>
             <td class="mark"><span class="m-no">&ndash;</span></td>
-            <td class="mark"><span class="m-ok">&#10003;</span></td>
-            <td class="why">Best in Outlook &#8212; it works on the real thread with your context. Scout can also draft it and send from your mailbox on request.</td>
+            <td class="why">Best in Outlook &#8212; it works on the real thread with your context. Chat works for something quick and standalone.</td>
           </tr>
           <tr>
             <td class="task">Prepare for or synthesize a meeting</td>
@@ -1183,8 +1225,7 @@ Sample sentences &#8212; "Here's where I land: we proceed with option B, and we 
             <td class="mark"><span class="m-ok">&#10003;</span></td>
             <td class="mark"><span class="m-no">&ndash;</span></td>
             <td class="mark"><span class="m-no">&ndash;</span></td>
-            <td class="mark"><span class="m-ok">&#10003;</span></td>
-            <td class="why">In the app it uses the real Teams meeting. Use Chat if you point it at the right meeting, or Scout to pull it together across your calendar and inbox.</td>
+            <td class="why">In the app it uses the real Teams meeting. Use Chat if you point it at the right meeting.</td>
           </tr>
           <tr>
             <td class="task">Create or edit one document, deck, or workbook</td>
@@ -1193,7 +1234,6 @@ Sample sentences &#8212; "Here's where I land: we proceed with option B, and we 
             <td class="mark"><span class="m-ok">&#10003;</span></td>
             <td class="mark"><span class="m-no">&ndash;</span></td>
             <td class="mark"><span class="m-ok">&#10003;</span></td>
-            <td class="mark"><span class="m-no">&ndash;</span></td>
             <td class="why">Inside the app, in editing mode, it works with your real file, data, and formulas. Cowork also works well for a longer document built up over several sessions.</td>
           </tr>
           <tr>
@@ -1203,8 +1243,7 @@ Sample sentences &#8212; "Here's where I land: we proceed with option B, and we 
             <td class="mark"><span class="m-best">&#9733; Best</span></td>
             <td class="mark"><span class="m-no">&ndash;</span></td>
             <td class="mark"><span class="m-no">&ndash;</span></td>
-            <td class="mark"><span class="m-ok">&#10003;</span></td>
-            <td class="why">Same process, same criteria, again and again &#8212; capture it once in an agent. Scout can also run it on a recurring schedule without you asking each time.</td>
+            <td class="why">Same process, same criteria, again and again &#8212; capture it once in an agent. Use an existing one or build your own.</td>
           </tr>
           <tr>
             <td class="task">Multi-step research across your data and the web</td>
@@ -1213,8 +1252,7 @@ Sample sentences &#8212; "Here's where I land: we proceed with option B, and we 
             <td class="mark"><span class="m-ok">&#10003;</span></td>
             <td class="mark"><span class="m-best">&#9733; Best</span></td>
             <td class="mark"><span class="m-no">&ndash;</span></td>
-            <td class="mark"><span class="m-ok">&#10003;</span></td>
-            <td class="why">Researcher reasons over both to uncover insight and produce a rich, cited report. Scout can do similar research plus act on the findings across your apps.</td>
+            <td class="why">Researcher reasons over both to uncover insight and produce a rich, cited report.</td>
           </tr>
           <tr>
             <td class="task">Analyze a raw dataset and show the working</td>
@@ -1222,7 +1260,6 @@ Sample sentences &#8212; "Here's where I land: we proceed with option B, and we 
             <td class="mark"><span class="m-ok">&#10003;</span></td>
             <td class="mark"><span class="m-no">&ndash;</span></td>
             <td class="mark"><span class="m-best">&#9733; Best</span></td>
-            <td class="mark"><span class="m-no">&ndash;</span></td>
             <td class="mark"><span class="m-no">&ndash;</span></td>
             <td class="why">Analyst uses an analytics model and runs Python live on your data &#8212; and you can see the code it ran.</td>
           </tr>
@@ -1233,28 +1270,17 @@ Sample sentences &#8212; "Here's where I land: we proceed with option B, and we 
             <td class="mark"><span class="m-no">&ndash;</span></td>
             <td class="mark"><span class="m-no">&ndash;</span></td>
             <td class="mark"><span class="m-best">&#9733; Best</span></td>
-            <td class="mark"><span class="m-no">&ndash;</span></td>
             <td class="why">Cowork keeps a persistent, shared workspace so the document, tracker, or deck builds up over multiple sessions and multiple contributors instead of starting over each time.</td>
-          </tr>
-          <tr>
-            <td class="task">Run a task hands-off, across apps, on a schedule</td>
-            <td class="mark"><span class="m-no">&ndash;</span></td>
-            <td class="mark"><span class="m-no">&ndash;</span></td>
-            <td class="mark"><span class="m-ok">&#10003;</span></td>
-            <td class="mark"><span class="m-no">&ndash;</span></td>
-            <td class="mark"><span class="m-no">&ndash;</span></td>
-            <td class="mark"><span class="m-best">&#9733; Best</span></td>
-            <td class="why">Scout acts autonomously across your mailbox, calendar, files, and browser, and can run on a recurring schedule without you starting the conversation each time.</td>
           </tr>
         </tbody>
       </table>
     </div>
     <p class="legend"><span class="m-best"><strong>&#9733; Best option</strong></span> &nbsp;&nbsp; <span class="m-ok"><strong>&#10003; Also works</strong></span> &nbsp;&nbsp; <span class="m-no"><strong>&ndash; Not recommended</strong></span></p>
 
-    <div class="tip"><strong>Rule of thumb:</strong> one app for <em>one file</em> &middot; one agent for <em>one repeated task</em> &middot; Researcher and Analyst when <em>the thinking is the hard part</em> &middot; Cowork when <em>the deliverable outgrows one sitting</em> &middot; Scout when <em>the work should happen without you asking</em>. And remember Copilot Chat is the entry point &#8212; from chat you can <code>@</code>mention any agent, including Researcher and Analyst, and even schedule prompts that repeat automatically.</div>
+    <div class="tip"><strong>Rule of thumb:</strong> one app for <em>one file</em> &middot; one agent for <em>one repeated task</em> &middot; Researcher and Analyst when <em>the thinking is the hard part</em> &middot; Cowork when <em>the deliverable outgrows one sitting</em>. And remember Copilot Chat is the entry point &#8212; from chat you can <code>@</code>mention any agent, including Researcher and Analyst, and even schedule prompts that repeat automatically.</div>
 
     <h3 class="group"><span class="step-num">3</span> What each one looks like in practice</h3>
-    <p class="scene" style="margin-left:0;">The same six choices, as prompts you can copy. Notice how the shape of the prompt changes with the tool.</p>
+    <p class="scene" style="margin-left:0;">The same five choices, as prompts you can copy. Notice how the shape of the prompt changes with the tool.</p>
 
     <h3 class="group" style="font-size:16px; margin-top:24px;">Use Copilot Chat when you need an answer, not an artifact</h3>
     <div class="prompt-card">
@@ -1306,14 +1332,7 @@ Sample sentences &#8212; "Here's where I land: we proceed with option B, and we 
       <pre class="prompt-text">Let's build out the [quarterly business review pack / client onboarding tracker / offsite briefing document] in this workspace. Start with an outline based on what we discussed, and we'll add sections, data, and edits together over the next few sessions. Keep a running list of open questions we still need to resolve.</pre>
     </div>
 
-    <h3 class="group" style="font-size:16px; margin-top:24px;">Use Scout when the work should happen without you asking</h3>
-    <p class="scene" style="margin-left:0;">Scout works autonomously across your apps, files, browser, and mailbox &#8212; and can run on a schedule, so the routine work happens whether or not you remember to ask for it.</p>
-    <div class="prompt-card">
-      <div class="prompt-head"><span class="prompt-label">Scout</span><button class="copy-btn">Copy</button></div>
-      <pre class="prompt-text">Every weekday morning at 7:30, pull together a brief for me: unread emails from my key stakeholders, today's meetings with a one-line reminder of what each is about, and anything still waiting on my sign-off. Send it to me so it's ready when I sit down.</pre>
-    </div>
-
-    <div class="tip"><strong>Still not sure?</strong> Start in Copilot Chat. It's the fastest way to find out whether the task is a five-second answer or something that deserves one of the other five &#8212; and you can hand it off from there.</div>
+    <div class="tip"><strong>Still not sure?</strong> Start in Copilot Chat. It's the fastest way to find out whether the task is a five-second answer or something that deserves one of the other four &#8212; and you can hand it off from there.</div>
   </section>
 
 </main>
