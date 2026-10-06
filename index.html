@@ -341,6 +341,20 @@
   .pill-nav .pill-btn { appearance: none; font-family: inherit; font-size: 14px; font-weight: 600; color: var(--ms-mid); background: var(--surface); border: 1px solid var(--ms-light); border-radius: 20px; padding: 8px 16px; cursor: pointer; transition: background 0.15s, color 0.15s, border-color 0.15s; }
   .pill-nav .pill-btn:hover { background: var(--surface-alt); }
   .pill-nav .pill-btn.active { background: var(--ms-blue); color: #fff; border-color: var(--ms-blue); }
+
+  /* ---------- Prompt mode toggle (Copilot vs Cowork) ---------- */
+  .mode-toggle-wrap { margin: 4px 0 28px; }
+  .mode-toggle { display: inline-flex; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 999px; padding: 4px; gap: 4px; }
+  .mode-toggle .mode-btn { appearance: none; font-family: inherit; font-size: 14px; font-weight: 700; color: var(--muted-text); background: transparent; border: none; padding: 9px 20px; border-radius: 999px; cursor: pointer; transition: background 0.15s, color 0.15s; }
+  .mode-toggle .mode-btn:hover:not(.active) { color: var(--ms-blue); }
+  .mode-toggle .mode-btn.active { background: var(--ms-blue); color: #fff; }
+  .mode-note { font-size: 13.5px; color: var(--muted-text); margin: 10px 0 0; display: none; }
+  .mode-note-copilot { display: block; }
+  #prompts.cowork-mode .mode-note-copilot { display: none; }
+  #prompts.cowork-mode .mode-note-cowork { display: block; }
+  .mode-content.mode-cowork { display: none; }
+  #prompts.cowork-mode .mode-content.mode-copilot { display: none; }
+  #prompts.cowork-mode .mode-content.mode-cowork { display: block; }
   .subpanel { display: none; animation: fade 0.25s ease; }
   .subpanel.active { display: block; }
 </style>
@@ -459,7 +473,16 @@
         <button class="pill-btn" data-sub="sub-marketing">Marketing</button>
         <button class="pill-btn" data-sub="sub-legal">Legal &amp; Compliance</button>
         <button class="pill-btn" data-sub="sub-ops">Operations</button>
-        <button class="pill-btn" data-sub="sub-cowork">Cowork Prompts</button>
+      </div>
+
+      <div class="mode-toggle-wrap">
+        <p class="pill-label">Prompt style</p>
+        <div class="mode-toggle" role="tablist" aria-label="Prompt style">
+          <button class="mode-btn active" data-mode="copilot" type="button">Copilot Prompts</button>
+          <button class="mode-btn" data-mode="cowork" type="button">Cowork Prompts</button>
+        </div>
+        <p class="mode-note mode-note-copilot">Quick, single-exchange prompts for the Microsoft 365 Copilot chat and the in-app Copilot.</p>
+        <p class="mode-note mode-note-cowork">Bigger, multi-session deliverables built up over time in a shared Cowork workspace &#8212; start with the prompt as your opening brief, then keep refining it together across sessions.</p>
       </div>
 
       <div class="subpanel" id="sub-cos">
@@ -467,6 +490,7 @@
         <h2 class="section-title">Running the leadership operating rhythm</h2>
         <p class="lede">These prompts walk through a chief of staff's week &#8212; synthesizing what matters, running the leadership meeting, turning information into decisions, and communicating outward &#8212; and they span the tools you use to do it: the Microsoft 365 Copilot chat, Word, Excel, PowerPoint, Teams, and Outlook.</p>
 
+        <div class="mode-content mode-copilot">
         <div class="tip"><strong>Where to run these.</strong> Each prompt is tagged with its app &#8212; the Copilot chat for pulling across sources, Word and PowerPoint for documents and decks, Excel for the data, Teams for the recap, and Outlook for the message. Where you see something in <code>[brackets]</code>, attach that file or meeting by typing <code>/</code>.</div>
 
         <h3 class="group"><span class="step-num">1</span> Monday: synthesize the week</h3>
@@ -519,6 +543,27 @@
         </div>
 
         <div class="tip"><strong>Your turn:</strong> point these at your real priorities, your real business review, your real meeting. Then see the <strong>Agents 101</strong> tab to package this whole rhythm into a reusable Chief of Staff agent.</div>
+        </div>
+
+        <div class="mode-content mode-cowork">
+        <div class="tip"><strong>Where to run these.</strong> Start a new Cowork workspace, paste the prompt as your opening brief, and keep the workspace open across the week as new material comes in.</div>
+
+        <h3 class="group"><span class="step-num">1</span> Build the quarterly business review pack</h3>
+        <p class="scene">The QBR deck touches every team's numbers and narrative. You want one workspace that pulls it together over several working sessions, not a deck you rebuild from scratch each quarter.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Cowork</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Let's build this quarter's business review pack together in this workspace. Start with a proposed structure: executive summary, performance against our top priorities, financial highlights and variances, key risks and mitigations, and the decisions we need from leadership. Pull a first draft of each section from the documents and data I attach, mark clearly where a number or claim still needs my confirmation, and keep a running "open questions" list at the top of the workspace so we both know what's still outstanding. We'll work through it section by section over the next few sessions &#8212; don't try to finalize anything on the first pass.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">2</span> Build the leadership offsite briefing document</h3>
+        <p class="scene">The annual offsite needs a single briefing document that pulls in strategy, Business Ops Review themes, and the scorecard &#8212; something leadership can read before they arrive, not sit through as slides.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Cowork</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Let's build the pre-read briefing document for our leadership offsite in this workspace. Start with a structure: where we stand against our priorities, the three strategic choices we need to debate at the offsite, the scorecard and business review themes from the last two quarters, and a list of pre-read questions for each attendee. Pull from the materials I attach across our sessions, flag any section where the story has changed since the last draft, and keep a running list of open questions at the top so I always know what's still unresolved before we lock the agenda.</pre>
+        </div>
+
+        <div class="tip"><strong>Your turn:</strong> treat the first draft as a working outline, not a finished pack &#8212; keep the workspace open across the week and bring your team in to add sections alongside you.</div>
+        </div>
       </div>
 
       <div class="subpanel" id="sub-ea">
@@ -526,6 +571,7 @@
         <h2 class="section-title">A day across your apps</h2>
         <p class="lede">These prompts follow an executive admin through the day &#8212; and they move across the apps you already use: the Microsoft 365 Copilot chat, Outlook, Word, PowerPoint, Excel, and Teams. Each is tagged with where to run it. Two use the executive's shared mailbox (marked); the rest are your own.</p>
 
+        <div class="mode-content mode-copilot">
         <div class="tip"><strong>Where to run these.</strong> Each prompt shows the app it belongs in. The two tagged <span style="color:#b06f10; font-weight:700;">Exec mailbox</span> open the executive's shared mailbox in Outlook; everything else runs on your own data and apps. In Word, PowerPoint, and Excel, click the <strong>Copilot</strong> button and paste the prompt right in.</div>
 
         <h3 class="group"><span class="step-num">1</span> Start the day with a morning brief</h3>
@@ -592,6 +638,27 @@
         </div>
 
         <div class="tip"><strong>Your turn:</strong> point these at a real email, a real topic, or a real deck and watch how much time they save. The <strong>Agents 101</strong> tab shows how to turn your favorites into a one-click assistant.</div>
+        </div>
+
+        <div class="mode-content mode-cowork">
+        <div class="tip"><strong>Where to run these.</strong> Start a new Cowork workspace and treat it as a living reference you and your executive's team return to and refine together, not a one-time export.</div>
+
+        <h3 class="group"><span class="step-num">1</span> Build the executive's annual calendar &amp; travel playbook</h3>
+        <p class="scene">Board cycles, town halls, client travel, and personal commitments all compete for the same calendar. You want one workspace that plans the year, not a spreadsheet you rebuild every January.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Cowork</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Let's build an annual calendar and travel playbook for my executive in this workspace. Start with a structure: recurring governance commitments (board meetings, town halls, business reviews), known travel and client visits, blackout periods, and a running list of conflicts still to resolve. As I add dates and commitments across sessions, keep the master calendar updated, flag any new conflicts the moment they appear, and keep a short rationale for any commitment we've decided to decline or delegate.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">2</span> Co-author the new executive onboarding guide</h3>
+        <p class="scene">A new executive is joining and needs a guide to how this office actually runs &#8212; not a one-off welcome deck, but something that keeps getting sharper as you and the rest of the team add to it.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Cowork</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Let's co-author an onboarding guide for a new executive joining our office, in this workspace. Structure it as: who's who and how we work together, the recurring meeting rhythm and who owns each one, key systems and access to set up in week one, and the unwritten rules that make this office run smoothly. As different members of the support team add their sections over the next few weeks, keep the tone and formatting consistent, and flag anything that conflicts with what's already written.</pre>
+        </div>
+
+        <div class="tip"><strong>Your turn:</strong> keep the workspace open as the year unfolds &#8212; a living calendar or guide beats a document you export once and let go stale.</div>
+        </div>
       </div>
 
       <div class="subpanel" id="sub-leaders">
@@ -599,6 +666,7 @@
         <h2 class="section-title">Leading with Copilot</h2>
         <p class="lede">These prompts are for the leaders the chiefs of staff and executive admins support &#8212; the leadership operating committee, director through managing director. They follow a leader's day and span the apps you use to run the business: the Microsoft 365 Copilot chat, Excel, Word, Outlook, and PowerPoint.</p>
 
+        <div class="mode-content mode-copilot">
         <div class="tip"><strong>Where to run these.</strong> Each prompt is tagged with its app. They run on your own mailbox, calendar, and files &#8212; you have full access to your own information &#8212; and the external-intelligence prompt uses Copilot's <strong>web</strong> search (look for the web option). In Word, Excel, and PowerPoint, click the <strong>Copilot</strong> button and paste the prompt right in.</div>
 
         <h3 class="group"><span class="step-num">1</span> Start the day with an executive brief</h3>
@@ -651,6 +719,27 @@
         </div>
 
         <div class="tip"><strong>Your turn:</strong> point these at your real priorities, your real meeting, and your real numbers. The other roles on the <strong>Prompts</strong> tab pair well too &#8212; your chiefs of staff and assistants can run those on your behalf.</div>
+        </div>
+
+        <div class="mode-content mode-cowork">
+        <div class="tip"><strong>Where to run these.</strong> Start a new Cowork workspace for anything that needs to hold up over several rounds of scrutiny &#8212; a strategy narrative or a multi-quarter plan isn't a one-shot draft.</div>
+
+        <h3 class="group"><span class="step-num">1</span> Develop the board-level strategy narrative</h3>
+        <p class="scene">A strategy document for the board needs to hold up under scrutiny and evolve as the thinking sharpens. You want a living draft, not a single-shot memo.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Cowork</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Help me develop a board-level strategy narrative in this workspace over the next several sessions. Begin with an outline covering: the market context and why now, our strategic choices and the trade-offs behind them, the investment case, execution risks, and the milestones we'll report against. Use our prior strategy documents and board materials as the foundation, flag any section where our story has shifted since the last version, and keep a version history of major changes at the bottom of the workspace so I can see how the narrative evolved. Push back where the logic has gaps rather than smoothing over them.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">2</span> Build the multi-quarter objectives roadmap</h3>
+        <p class="scene">Your priorities span several quarters and shift as results come in. You want one workspace that tracks the plan as it evolves, not a static roadmap slide that's out of date by the next review.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Cowork</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Let's build a multi-quarter objectives roadmap for my organization in this workspace. Start with a structure: this quarter's commitments, next quarter's planned priorities, dependencies across teams, and the metrics we'll use to judge progress. As results and decisions come in each quarter, update the roadmap, move completed items to a track record section, and keep a short log of what changed and why so I can explain the evolution to the committee.</pre>
+        </div>
+
+        <div class="tip"><strong>Your turn:</strong> keep the workspace open across the planning cycle &#8212; let the narrative and the roadmap evolve with the business instead of starting over each review.</div>
+        </div>
       </div>
 
       <div class="subpanel active" id="sub-itleaders">
@@ -658,6 +747,7 @@
         <h2 class="section-title">A day in the life of a technology leader</h2>
         <p class="lede">These prompts follow a Morgan Stanley technology leader through the day &#8212; from the morning signal to setting technical direction &#8212; and they span the apps you use to run your organization: the Microsoft 365 Copilot chat, Outlook, Excel, Word, PowerPoint, and Teams. They're built for the people in the room: the divisional CTOs, the CISO, and the data, platform, and digital product leaders.</p>
 
+        <div class="mode-content mode-copilot">
         <div class="tip"><strong>Where to run these.</strong> Each prompt is tagged with its app, and they run on your own mailbox, calendar, Teams, and files &#8212; you have full access to your own information. The external-intelligence prompt uses Copilot's <strong>web</strong> search (look for the web option). In Word, Excel, and PowerPoint, click the <strong>Copilot</strong> button and paste the prompt right in. Where you see something in <code>[brackets]</code>, attach that file, meeting, or channel by typing <code>/</code>.</div>
 
         <h3 class="group"><span class="step-num">1</span> Start the day with a leadership brief</h3>
@@ -717,6 +807,27 @@
         </div>
 
         <div class="tip"><strong>Your turn:</strong> point these at your real portfolio, your real review, and your real numbers. The <strong>Agents 101</strong> tab shows how to turn your favorite into a one-click assistant &#8212; including the <strong>Platform Tech &amp; Roadmap Advisor</strong> we built for this group.</div>
+        </div>
+
+        <div class="mode-content mode-cowork">
+        <div class="tip"><strong>Where to run these.</strong> Start a new Cowork workspace for anything that spans an architecture decision or a migration &#8212; the record needs to survive longer than one chat.</div>
+
+        <h3 class="group"><span class="step-num">1</span> Build the technology roadmap &amp; architecture decision record</h3>
+        <p class="scene">Decisions about platforms and standards get made in scattered meetings and emails. You want one workspace that holds the roadmap and the reasoning behind every major call, so nobody has to reconstruct it later.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Cowork</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Let's build a technology roadmap and architecture decision record in this workspace. Start with a structure: the roadmap by platform and quarter, a running log of architecture decisions with the options considered and why we chose what we chose, and open questions still being debated. As new decisions get made across our sessions, add them to the log in the same format, flag any new decision that conflicts with an earlier one, and keep the roadmap view in sync with the decision log.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">2</span> Run the platform migration workspace</h3>
+        <p class="scene">A major platform migration spans months, several workstreams, and a long list of risks. You want one place that tracks progress and risk as it evolves, not a status deck rebuilt before every steering committee.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Cowork</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Set up a migration workspace for [the platform or system] in this workspace, covering these workstreams: data migration, application cutover, security and compliance sign-off, and user readiness. For each workstream, track the plan, current status, and open risks with an owner. As updates come in across sessions, keep the overall status current, flag any workstream that's falling behind, and maintain a running steering-committee summary at the top I can use without rebuilding it each time.</pre>
+        </div>
+
+        <div class="tip"><strong>Your turn:</strong> keep the workspace open for the life of the decision or the migration &#8212; the record is more valuable than any single status update.</div>
+        </div>
       </div>
 
       <div class="subpanel" id="sub-finance">
@@ -724,6 +835,7 @@
         <h2 class="section-title">Closing the books, faster and with more confidence</h2>
         <p class="lede">These prompts follow a finance leader through a reporting cycle &#8212; reconciling data, explaining variances, and briefing stakeholders &#8212; using the Microsoft 365 Copilot chat, Excel, Word, Outlook, and PowerPoint.</p>
 
+        <div class="mode-content mode-copilot">
         <div class="tip"><strong>Where to run these.</strong> Each prompt is tagged with its app. They run on your own files and mailbox; for shared finance workbooks, open them in Excel and use the in-app Copilot so it works on the live data and formulas.</div>
 
         <h3 class="group"><span class="step-num">1</span> Explain the variance before someone asks</h3>
@@ -762,6 +874,27 @@
         </div>
 
         <div class="tip"><strong>Your turn:</strong> point these at your real ledger, your real reporting pack, and your real board deck. Always verify totals and formulas before anything goes out &#8212; Copilot drafts the narrative, you own the numbers.</div>
+        </div>
+
+        <div class="mode-content mode-cowork">
+        <div class="tip"><strong>Where to run these.</strong> Start a new Cowork workspace for anything that spans the full planning or close cycle, not just one quarter's numbers.</div>
+
+        <h3 class="group"><span class="step-num">1</span> Build the annual operating plan</h3>
+        <p class="scene">The annual plan pulls together priorities, budget, and headcount across every team you support. It takes weeks to get right, and it keeps changing as numbers come in.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Cowork</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Build out our annual operating plan in this workspace across the next several sessions. Start with a skeleton covering: strategic priorities for the year, team-by-team budget and headcount asks with justification, planning assumptions, and the biggest risks to the plan. As I bring in inputs from each team over time, integrate them into the master document, reconcile any requests that conflict across teams, and keep a change log so I can see what shifted between drafts. At the end of each session, summarize what's still open before we close out.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">2</span> Run the multi-entity close and controls narrative</h3>
+        <p class="scene">Closing the books across several entities means reconciling data from different systems and explaining the same story several different ways. You want one workspace that tracks the close as it happens, not a rebuild every period-end.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Cowork</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Let's run this period's close in a shared workspace covering each entity: open reconciling items, the status of each control sign-off, and a running list of adjustments made and why. As each entity's data comes in across sessions, update its section, flag any reconciling item open for more than three days, and maintain a consolidated narrative at the top that explains the group's results once everything ties out.</pre>
+        </div>
+
+        <div class="tip"><strong>Your turn:</strong> keep the workspace open for the full cycle &#8212; let the plan or the close evolve with the numbers instead of rebuilding the narrative from scratch each time.</div>
+        </div>
       </div>
 
       <div class="subpanel" id="sub-hr">
@@ -769,6 +902,7 @@
         <h2 class="section-title">Supporting people decisions with better information</h2>
         <p class="lede">These prompts follow an HR partner through hiring, performance, and policy questions &#8212; using the Microsoft 365 Copilot chat, Word, Outlook, Excel, and Teams.</p>
 
+        <div class="mode-content mode-copilot">
         <div class="tip"><strong>Where to run these.</strong> Each prompt runs on your own files, mailbox, and Teams. Never paste identifiable employee data into a prompt unless the tool and workflow are approved for that data &#8212; check with your HR systems and privacy team first.</div>
 
         <h3 class="group"><span class="step-num">1</span> Draft the job description</h3>
@@ -807,6 +941,27 @@
         </div>
 
         <div class="tip"><strong>Your turn:</strong> point these at your real requisitions, your real policy library, and your real onboarding plans. Keep sensitive personnel matters within approved, access-controlled tools.</div>
+        </div>
+
+        <div class="mode-content mode-cowork">
+        <div class="tip"><strong>Where to run these.</strong> Start a new Cowork workspace for people decisions that unfold over weeks &#8212; a reorg or a succession plan isn't finished in one sitting, and it shouldn't live in a single person's head.</div>
+
+        <h3 class="group"><span class="step-num">1</span> Build the workforce &amp; reorg plan</h3>
+        <p class="scene">A reorganization touches org charts, role changes, and messaging all at once, and the plan keeps shifting as leadership weighs in. You want one workspace that holds the whole plan, not scattered drafts.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Cowork</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Let's build a workforce and reorg plan for [the team or division] in this workspace. Start with a structure: the current state org chart, the proposed future state and the rationale, the role-by-role changes and any impacted employees, a communication plan and timeline, and the open decisions still pending leadership sign-off. As decisions firm up across our sessions, update the plan, keep a log of what changed and when, and flag anything that still needs legal or compliance review before it can move forward.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">2</span> Run the talent review &amp; succession planning workspace</h3>
+        <p class="scene">Succession planning spans multiple calibration sessions and several leaders' input. You want one place that builds up the picture, not a slide deck redone before every talent review.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Cowork</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Set up a talent review and succession planning workspace for [the team or function]. Structure it by key role: the current incumbent, ready-now and ready-in-two-years successors, development actions in progress, and flight risk notes. As input comes in from each calibration session, update the relevant roles, keep a confidential version history so I can see how the bench has changed over time, and flag any critical role with no identified successor.</pre>
+        </div>
+
+        <div class="tip"><strong>Your turn:</strong> keep sensitive workforce and succession content in an access-controlled workspace, and treat every draft as confidential until leadership has signed off.</div>
+        </div>
       </div>
 
       <div class="subpanel" id="sub-sales">
@@ -814,6 +969,7 @@
         <h2 class="section-title">More time with clients, less time on admin</h2>
         <p class="lede">These prompts follow a relationship manager or advisor through a client cycle &#8212; prep, follow-up, and pipeline &#8212; using the Microsoft 365 Copilot chat, Outlook, Word, Excel, and Teams.</p>
 
+        <div class="mode-content mode-copilot">
         <div class="tip"><strong>Where to run these.</strong> Each prompt runs on your own calendar, mailbox, and files. Always follow your firm's suitability, disclosure, and record-keeping requirements for any client-facing material Copilot helps you draft.</div>
 
         <h3 class="group"><span class="step-num">1</span> Prep for the client meeting</h3>
@@ -852,6 +1008,27 @@
         </div>
 
         <div class="tip"><strong>Your turn:</strong> point these at your real book of clients, your real pipeline, and your real meeting notes. Route anything client-facing through your normal review and compliance process before it goes out.</div>
+        </div>
+
+        <div class="mode-content mode-cowork">
+        <div class="tip"><strong>Where to run these.</strong> Start a new Cowork workspace for a client relationship that deserves more than a one-off note &#8212; a strategic account plan should outlast any single meeting.</div>
+
+        <h3 class="group"><span class="step-num">1</span> Co-author the client onboarding playbook</h3>
+        <p class="scene">Onboarding a major new client touches several teams over several weeks. You want a shared playbook that gets more complete every time someone works on it, not a document one person owns alone.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Cowork</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Let's co-author a client onboarding playbook for [client name] in this workspace, designed for several of us to contribute to over time. Structure it as: relationship background and key contacts, service scope and commitments, the 30-60-90 day onboarding milestones, risks and dependencies, and an escalation path. Start from our standard onboarding template and the account materials I'll share, and as different team members add their sections, keep the whole document consistent in tone and flag any places where two contributors' sections conflict or overlap.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">2</span> Build the strategic account plan</h3>
+        <p class="scene">Your most important client relationship deserves a real plan, not a mental model. You want a workspace that captures the whole relationship and grows sharper after every meeting.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Cowork</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Let's build a strategic account plan for [client name] in this workspace. Start with a structure: relationship map and key stakeholders, the client's current priorities and how we can support them, our open opportunities and their status, risks to the relationship, and our engagement plan for the next two quarters. After each meeting I bring back notes on, update the relevant sections, flag anything that changes our read on the relationship, and keep a short history of how our strategy for this client has evolved.</pre>
+        </div>
+
+        <div class="tip"><strong>Your turn:</strong> keep the workspace open for the life of the relationship, and always route anything client-facing through your normal compliance process before it goes out.</div>
+        </div>
       </div>
 
       <div class="subpanel" id="sub-marketing">
@@ -859,6 +1036,7 @@
         <h2 class="section-title">From brief to campaign, faster</h2>
         <p class="lede">These prompts follow a marketing lead through campaign planning and content production &#8212; using the Microsoft 365 Copilot chat, Word, PowerPoint, Excel, and Outlook.</p>
 
+        <div class="mode-content mode-copilot">
         <div class="tip"><strong>Where to run these.</strong> Each prompt runs on your own files and mailbox. Route any external-facing content through your brand and compliance review before publishing, especially for a regulated financial services brand.</div>
 
         <h3 class="group"><span class="step-num">1</span> Turn a brief into a campaign plan</h3>
@@ -897,6 +1075,27 @@
         </div>
 
         <div class="tip"><strong>Your turn:</strong> point these at your real brief, your real campaign data, and your real competitive set. Always route client- or public-facing content through brand and compliance review.</div>
+        </div>
+
+        <div class="mode-content mode-cowork">
+        <div class="tip"><strong>Where to run these.</strong> Start a new Cowork workspace for a campaign calendar or a crisis plan that needs to stay current all year, not a one-time draft.</div>
+
+        <h3 class="group"><span class="step-num">1</span> Build the annual campaign calendar &amp; content workspace</h3>
+        <p class="scene">A year of campaigns means dozens of moving pieces across channels and teams. You want one workspace that holds the whole calendar and the content behind it, not a spreadsheet that's out of date by February.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Cowork</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Let's build our annual campaign calendar and content workspace. Start with a structure: a quarter-by-quarter campaign calendar with themes and target audiences, a content pipeline showing what's in draft, in review, and approved, and a running list of past performance learnings to apply going forward. As new campaigns are scoped across our sessions, add them to the calendar, flag any date conflicts or resourcing gaps, and keep the learnings section updated after every major campaign wraps.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">2</span> Develop the crisis communications playbook</h3>
+        <p class="scene">A crisis plan only works if it's been thought through before you need it. You want a workspace the whole team can stress-test and refine, not a PDF that was written once and forgotten.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Cowork</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Help me develop a crisis communications playbook in this workspace. Start with a structure: likely scenarios and their severity, the approval chain and who signs off on external statements for each severity level, holding-statement templates, and the channels and cadence for updates. As we war-game different scenarios across sessions, refine the templates and the approval chain, and flag any gap where it's unclear who owns the decision.</pre>
+        </div>
+
+        <div class="tip"><strong>Your turn:</strong> keep both workspaces current year-round, and always route anything public-facing through brand and compliance review before it goes out.</div>
+        </div>
       </div>
 
       <div class="subpanel" id="sub-legal">
@@ -904,6 +1103,7 @@
         <h2 class="section-title">Faster first drafts, sharper review</h2>
         <p class="lede">These prompts follow legal and compliance counsel through contract review, policy questions, and reporting &#8212; using the Microsoft 365 Copilot chat, Word, Outlook, and Excel.</p>
 
+        <div class="mode-content mode-copilot">
         <div class="tip"><strong>Where to run these.</strong> Copilot accelerates drafting and review &#8212; it does not replace legal judgment or a qualified review. Always have a licensed attorney review anything before it's relied upon or sent externally.</div>
 
         <h3 class="group"><span class="step-num">1</span> Summarize a contract for a non-lawyer</h3>
@@ -942,6 +1142,27 @@
         </div>
 
         <div class="tip"><strong>Your turn:</strong> point these at your real agreements and your real policy library, and always close the loop with qualified legal review before anything is signed or relied upon.</div>
+        </div>
+
+        <div class="mode-content mode-cowork">
+        <div class="tip"><strong>Where to run these.</strong> Start a new Cowork workspace for a diligence effort or a policy overhaul that spans weeks of contributions, not a single review sitting.</div>
+
+        <h3 class="group"><span class="step-num">1</span> Run a structured due diligence workspace</h3>
+        <p class="scene">A due diligence effort spans weeks, multiple workstreams, and several contributors. You want one place that tracks findings as they come in rather than a patchwork of emails and documents.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Cowork</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Set up a due diligence workspace for [the target or deal] covering these workstreams: financial, legal, operational, and technology. For each workstream, create a section with the key questions we need answered, the documents reviewed so far, findings to date, and a red/amber/green risk rating with reasoning. As I upload new documents or notes across sessions, update the relevant section and flag anything that contradicts an earlier finding. Keep a consolidated summary of the top five risks at the top of the workspace, updated after every session.</pre>
+        </div>
+
+        <h3 class="group"><span class="step-num">2</span> Run the enterprise policy refresh workspace</h3>
+        <p class="scene">A multi-policy refresh touches several owners and a long review cycle. You want one place that tracks every policy's status, not a tracker that falls out of date after the first round of comments.</p>
+        <div class="prompt-card">
+          <div class="prompt-head"><span class="prompt-label">Cowork</span><button class="copy-btn">Copy</button></div>
+          <pre class="prompt-text">Let's run our policy refresh program in this workspace, covering each policy under review. For each one, track its current status, the key changes being proposed and why, which stakeholders still need to sign off, and the target effective date. As comments and approvals come in across sessions, update each policy's status, flag any policy that's stalled for more than two weeks, and keep a consolidated summary at the top I can use for the governance committee update.</pre>
+        </div>
+
+        <div class="tip"><strong>Your turn:</strong> keep the workspace open for the full length of the effort, and close every finding or policy change with qualified legal sign-off before it's relied upon.</div>
+        </div>
       </div>
 
       <div class="subpanel" id="sub-ops">
@@ -949,6 +1170,7 @@
         <h2 class="section-title">Keeping the engine running smoothly</h2>
         <p class="lede">These prompts follow an operations leader through exception handling, process documentation, and reporting &#8212; using the Microsoft 365 Copilot chat, Excel, Word, Outlook, and Teams.</p>
 
+        <div class="mode-content mode-copilot">
         <div class="tip"><strong>Where to run these.</strong> Each prompt runs on your own files, mailbox, and Teams. For shared operational data, open it in Excel and use the in-app Copilot so it works on the live data.</div>
 
         <h3 class="group"><span class="step-num">1</span> Triage the exception queue</h3>
@@ -987,51 +1209,27 @@
         </div>
 
         <div class="tip"><strong>Your turn:</strong> point these at your real exception queue, your real dashboards, and your real incident channel. Keep a human in the loop for anything that changes a client outcome or a financial position.</div>
-      </div>
-
-      <div class="subpanel" id="sub-cowork">
-        <span class="pill">Cowork Prompts</span>
-        <h2 class="section-title">Longer-running, multi-session deliverables built with Cowork</h2>
-        <p class="lede">Cowork keeps a persistent, shared workspace where you and Copilot build a deliverable up over several sessions instead of in a single exchange &#8212; so these prompts are deliberately bigger and more structured than a one-shot chat prompt. Use them as a starting brief, then keep working the draft across sessions and bring in colleagues as needed.</p>
-
-        <div class="tip"><strong>Where to run these.</strong> Start a new Cowork workspace, paste the prompt as your opening brief, and treat the first response as an outline to refine rather than a finished deliverable. Attach source documents directly to the workspace so every session has the same grounding.</div>
-
-        <h3 class="group"><span class="step-num">1</span> Build the quarterly business review pack</h3>
-        <p class="scene">The QBR deck touches every team's numbers and narrative. You want one workspace that pulls it together over several working sessions, not a deck you rebuild from scratch each quarter.</p>
-        <div class="prompt-card">
-          <div class="prompt-head"><span class="prompt-label">Cowork</span><button class="copy-btn">Copy</button></div>
-          <pre class="prompt-text">Let's build this quarter's business review pack together in this workspace. Start with a proposed structure: executive summary, performance against our top priorities, financial highlights and variances, key risks and mitigations, and the decisions we need from leadership. Pull a first draft of each section from the documents and data I attach, mark clearly where a number or claim still needs my confirmation, and keep a running "open questions" list at the top of the workspace so we both know what's still outstanding. We'll work through it section by section over the next few sessions &#8212; don't try to finalize anything on the first pass.</pre>
         </div>
 
-        <h3 class="group"><span class="step-num">2</span> Develop the board-level strategy narrative</h3>
-        <p class="scene">A strategy document for the board needs to hold up under scrutiny and evolve as the thinking sharpens. You want a living draft, not a single-shot memo.</p>
+        <div class="mode-content mode-cowork">
+        <div class="tip"><strong>Where to run these.</strong> Start a new Cowork workspace for resilience planning or a standardization effort that needs to evolve over time, not a one-off document.</div>
+
+        <h3 class="group"><span class="step-num">1</span> Build the business continuity &amp; resilience playbook</h3>
+        <p class="scene">A resilience plan only helps if it's current and everyone knows their role. You want a workspace the team can stress-test together, not a binder that gets opened once a year for an audit.</p>
         <div class="prompt-card">
           <div class="prompt-head"><span class="prompt-label">Cowork</span><button class="copy-btn">Copy</button></div>
-          <pre class="prompt-text">Help me develop a board-level strategy narrative in this workspace over the next several sessions. Begin with an outline covering: the market context and why now, our strategic choices and the trade-offs behind them, the investment case, execution risks, and the milestones we'll report against. Use our prior strategy documents and board materials as the foundation, flag any section where our story has shifted since the last version, and keep a version history of major changes at the bottom of the workspace so I can see how the narrative evolved. Push back where the logic has gaps rather than smoothing over them.</pre>
+          <pre class="prompt-text">Let's build a business continuity and resilience playbook for [the function or process] in this workspace. Start with a structure: critical processes and their recovery time objectives, failover procedures for each, key contacts and escalation paths, and the gaps we still need to close. As we run tabletop exercises across sessions, update the playbook with what we learned, flag any gap that's still unresolved, and keep a log of when each section was last tested.</pre>
         </div>
 
-        <h3 class="group"><span class="step-num">3</span> Run a structured due diligence workspace</h3>
-        <p class="scene">A due diligence effort spans weeks, multiple workstreams, and several contributors. You want one place that tracks findings as they come in rather than a patchwork of emails and documents.</p>
+        <h3 class="group"><span class="step-num">2</span> Run the multi-site process standardization workspace</h3>
+        <p class="scene">Standardizing a process across sites means reconciling how each location actually works today before you can agree on one way forward. You want one workspace that tracks the gap analysis and the rollout, not a dozen disconnected documents.</p>
         <div class="prompt-card">
           <div class="prompt-head"><span class="prompt-label">Cowork</span><button class="copy-btn">Copy</button></div>
-          <pre class="prompt-text">Set up a due diligence workspace for [the target or deal] covering these workstreams: financial, legal, operational, and technology. For each workstream, create a section with the key questions we need answered, the documents reviewed so far, findings to date, and a red/amber/green risk rating with reasoning. As I upload new documents or notes across sessions, update the relevant section and flag anything that contradicts an earlier finding. Keep a consolidated summary of the top five risks at the top of the workspace, updated after every session.</pre>
+          <pre class="prompt-text">Set up a process standardization workspace for [the process] across our sites. Start with a structure: how each site currently runs the process, the gaps versus our target standard, the proposed unified procedure, and a rollout plan by site with target dates. As each site's current-state details come in across sessions, add them to the comparison, update the rollout plan as sites go live, and flag any site that's falling behind schedule.</pre>
         </div>
 
-        <h3 class="group"><span class="step-num">4</span> Co-author the client onboarding playbook</h3>
-        <p class="scene">Onboarding a major new client touches several teams over several weeks. You want a shared playbook that gets more complete every time someone works on it, not a document one person owns alone.</p>
-        <div class="prompt-card">
-          <div class="prompt-head"><span class="prompt-label">Cowork</span><button class="copy-btn">Copy</button></div>
-          <pre class="prompt-text">Let's co-author a client onboarding playbook for [client name] in this workspace, designed for several of us to contribute to over time. Structure it as: relationship background and key contacts, service scope and commitments, the 30-60-90 day onboarding milestones, risks and dependencies, and an escalation path. Start from our standard onboarding template and the account materials I'll share, and as different team members add their sections, keep the whole document consistent in tone and flag any places where two contributors' sections conflict or overlap.</pre>
+        <div class="tip"><strong>Your turn:</strong> keep the workspace open and revisit it on a regular cadence &#8212; a resilience plan or a standardization effort that isn't maintained is only useful on paper.</div>
         </div>
-
-        <h3 class="group"><span class="step-num">5</span> Build the annual operating plan</h3>
-        <p class="scene">The annual plan pulls together priorities, budget, and headcount across every team you own. It takes weeks to get right, and it keeps changing as numbers come in.</p>
-        <div class="prompt-card">
-          <div class="prompt-head"><span class="prompt-label">Cowork</span><button class="copy-btn">Copy</button></div>
-          <pre class="prompt-text">Build out our annual operating plan in this workspace across the next several sessions. Start with a skeleton covering: strategic priorities for the year, team-by-team objectives and key results, budget and headcount asks with justification, and the biggest risks to the plan. As I bring in inputs from each team over time, integrate them into the master document, reconcile any priorities that conflict across teams, and keep a change log so I can see what shifted between drafts. At the end of each session, summarize what's still open before we close out.</pre>
-        </div>
-
-        <div class="tip"><strong>Your turn:</strong> these prompts are intentionally larger in scope than a single-answer chat prompt &#8212; that's the point. Treat the first output as a working draft, keep the workspace open across sessions, and bring in colleagues to edit alongside you rather than starting a new conversation each time.</div>
       </div>
     </div>
   </section>
@@ -1367,6 +1565,20 @@ Sample sentences &#8212; "Here's where I land: we proceed with option B, and we 
         });
         var target = scope.querySelector('#' + btn.dataset.sub);
         if (target) { target.classList.add('active'); }
+      });
+    });
+  });
+
+  // ---------- Prompt mode toggle (Copilot vs Cowork) ----------
+  document.querySelectorAll('.mode-toggle').forEach(function (toggle) {
+    var scope = toggle.closest('.panel') || document;
+    toggle.querySelectorAll('.mode-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        toggle.querySelectorAll('.mode-btn').forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        if (scope.classList) {
+          scope.classList.toggle('cowork-mode', btn.dataset.mode === 'cowork');
+        }
       });
     });
   });
